@@ -4,7 +4,7 @@
   "description": "Nusatala Cloud Computing Projects",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.3",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
   }
 }
