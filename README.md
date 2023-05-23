@@ -10,3 +10,7 @@
     ```
     npm start
     ```
+5. Run a migration
+    ```
+    npx prisma migrate dev --name init
+    ```

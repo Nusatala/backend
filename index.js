@@ -5,24 +5,25 @@ const dotenv = require('dotenv');
 var bodyParser = require('body-parser');
 
 dotenv.config();
+
 // MySQL DB Connection 
-const mysql = require('mysql')
-const connection = mysql.createConnection({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DB
-})
+// const mysql = require('mysql')
+// const connection = mysql.createConnection({
+//   host: process.env.MYSQL_HOST,
+//   user: process.env.MYSQL_USER,
+//   password: process.env.MYSQL_PASSWORD,
+//   database: process.env.MYSQL_DB
+// })
 
-connection.connect()
+// connection.connect()
 
-connection.query('SELECT 3 + 5 AS solution', (err, rows, fields) => {
-  if (err) throw err
+// connection.query('SHOW TABLES', (err, rows, fields) => {
+//   if (err) throw err
 
-  console.log('The solution is: ', rows[0].solution)
-})
+//   console.log('The solution is: ', rows)
+// })
 
-connection.end()
+// connection.end()
 
 //BodyParsing
 app.use(bodyParser.urlencoded({ extended: false }));
