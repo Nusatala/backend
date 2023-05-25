@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,16 +7,144 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            Int       @id @default(autoincrement())
-  email         String    @unique
-  name          String
-  username      String    @unique
-  password      String
-  role          Int       @default(2)
-  photo         String?
-  google_id     String?
-  google_secret String?
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @default(now())
+model articles {
+  id              Int        @id @default(autoincrement())
+  user_id         Int
+  image_id        Int
+  tutorial_id     Int?
+  title           String     @db.VarChar(255)
+  asal_daerah     String     @db.VarChar(255)
+  history         String     @db.Text
+  bahan_pembuatan String     @db.VarChar(255)
+  sources         String     @db.Text
+  views           Int
+  create_at       DateTime?  @default(now()) @db.Timestamp(0)
+  update_at       DateTime?  @default(now()) @db.Timestamp(0)
+  users           users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_1")
+  images          images     @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_2")
+  tutorials       tutorials? @relation(fields: [tutorial_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_3")
+
+  @@index([image_id], map: "image_id")
+  @@index([tutorial_id], map: "tutorial_id")
+  @@index([user_id], map: "user_id")
+}
+
+model faqs {
+  id        Int       @id @default(autoincrement())
+  user_id   Int
+  question  String    @db.VarChar(255)
+  answer    String    @db.Text
+  create_at DateTime? @default(now()) @db.Timestamp(0)
+  update_at DateTime? @default(now()) @db.Timestamp(0)
+  users     users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "faqs_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model images {
+  id        Int         @id @default(autoincrement())
+  user_id   Int
+  label     String      @db.VarChar(255)
+  image     String      @db.VarChar(255)
+  create_at DateTime?   @default(now()) @db.Timestamp(0)
+  update_at DateTime?   @default(now()) @db.Timestamp(0)
+  articles  articles[]
+  users     users       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "images_ibfk_1")
+  tutorials tutorials[]
+
+  @@index([user_id], map: "user_id")
+}
+
+model products {
+  id          Int       @id @default(autoincrement())
+  user_id     Int?
+  label       String?   @db.VarChar(255)
+  title       String?   @db.VarChar(255)
+  thubmnail   String?   @db.VarChar(255)
+  description String?   @db.VarChar(255)
+  cost        Decimal?  @db.Decimal(11, 2)
+  link        String?   @db.VarChar(255)
+  rating      Float?    @db.Float
+  created_at  DateTime  @db.Timestamp(0)
+  updated_at  DateTime? @db.Timestamp(0)
+  users       users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "products_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model quiz_questions {
+  id             Int       @id @default(autoincrement())
+  quiz_id        Int?
+  status         Boolean?
+  question_image String?   @db.VarChar(255)
+  question_text  String?   @db.VarChar(255)
+  option1        String?   @db.VarChar(255)
+  option2        String?   @db.VarChar(255)
+  option3        String?   @db.VarChar(255)
+  option4        String?   @db.VarChar(255)
+  real_answer    String?   @db.VarChar(255)
+  created_at     DateTime  @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+  quizzes        quizzes?  @relation(fields: [quiz_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "quiz_questions_ibfk_1")
+
+  @@index([quiz_id], map: "quiz_id")
+}
+
+model quizzes {
+  id             Int              @id @default(autoincrement())
+  user_id        Int
+  status         Boolean
+  thumbnail      String?          @db.VarChar(80)
+  total_question Int
+  level          String           @db.VarChar(14)
+  created_at     DateTime         @db.Timestamp(0)
+  updated_at     DateTime?        @db.Timestamp(0)
+  quiz_questions quiz_questions[]
+  users          users            @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "quizzes_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model testimonials {
+  id        Int       @id @default(autoincrement())
+  user_id   Int
+  testimony String    @db.Text
+  rating    Int
+  create_at DateTime? @default(now()) @db.Timestamp(0)
+  update_at DateTime? @default(now()) @db.Timestamp(0)
+  users     users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "testimonials_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model tutorials {
+  id        Int        @id @default(autoincrement())
+  image_id  Int
+  link      String     @db.VarChar(255)
+  create_at DateTime?  @default(now()) @db.Timestamp(0)
+  update_at DateTime?  @default(now()) @db.Timestamp(0)
+  articles  articles[]
+  images    images     @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tutorials_ibfk_1")
+
+  @@index([image_id], map: "image_id")
+}
+
+model users {
+  id            Int            @id @default(autoincrement())
+  google_id     String?        @db.VarChar(80)
+  google_secret String?        @db.VarChar(80)
+  username      String?        @db.VarChar(80)
+  email         String         @db.VarChar(80)
+  password      String         @db.VarChar(80)
+  name          String?        @db.VarChar(80)
+  role          Boolean?
+  photo         String?        @db.VarChar(80)
+  created_at    DateTime?      @db.Timestamp(0)
+  updated_at    DateTime?      @db.Timestamp(0)
+  articles      articles[]
+  faqs          faqs[]
+  images        images[]
+  products      products[]
+  quizzes       quizzes[]
+  testimonials  testimonials[]
 }
