@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const userRoutes = require('./routes/user')
+const usersRoutes = require('./routes/users')
 const faqsRoutes = require('./routes/faqs')
 const testimonialsRoutes = require('./routes/testimonials')
 const dotenv = require('dotenv');
@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Routes
-app.use('/', userRoutes);
+app.use('/users', usersRoutes);
 app.use('/faqs', faqsRoutes)
 app.use('/testimonials', testimonialsRoutes)
 const PORT = process.env.PORT || 4111;
