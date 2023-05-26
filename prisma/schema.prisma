@@ -133,11 +133,11 @@ model users {
   id            Int            @id @default(autoincrement())
   google_id     String?        @db.VarChar(80)
   google_secret String?        @db.VarChar(80)
-  username      String?        @db.VarChar(80)
+  username      String         @db.VarChar(80)
   email         String         @db.VarChar(80)
   password      String         @db.VarChar(80)
-  name          String?        @db.VarChar(80)
-  role          Boolean?
+  name          String         @db.VarChar(80)
+  role          Int
   photo         String?        @db.VarChar(80)
   created_at    DateTime?      @db.Timestamp(0)
   updated_at    DateTime?      @db.Timestamp(0)
