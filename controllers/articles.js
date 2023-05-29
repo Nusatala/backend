@@ -1,12 +1,12 @@
 const {PrismaClient} = require('@prisma/client')
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
-const getAllImages = async (req, res) => {
+const getAllArticles = async (req, res) => {
     try {
-        const images = await prisma.images.findMany();
+        const articles = await prisma.articles.findMany()
         res.status(200).json({
             message: 'Get data success',
-            data: images
+            data: articles
         })
     } catch (error) {
         res.status(500).json({
@@ -15,35 +15,16 @@ const getAllImages = async (req, res) => {
         })
     }
 }
-const getTwoImages = async (req, res) => {
-    const {label} = req.params
-    try {
-        const images = await prisma.images.findMany({
-            where: {label: label},
-            take: 2
-        })
-        res.status(200).json({
-            message: 'Get data success',
-            data: images
-        })
-        
-    } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
-        })
-    }
-}
 
-const getImageById = async (req, res) => {
+const getArticleById = async (req, res) => {
     const {id} = req.params
     try {
-        const images = await prisma.images.findUnique({
+        const articles = await prisma.articles.findUnique({
             where: {id: Number(id)}
         })
         res.status(200).json({
             message: 'Get data success',
-            data: images
+            data: articles
         })
     } catch (error) {
         res.status(500).json({
@@ -53,19 +34,25 @@ const getImageById = async (req, res) => {
     }
 }
 
-const createImage = async (req, res) => {
-    const {image, label, user_id} = req.body
+const createArticle = async (req, res) => {
+    const {user_id, image_id, tutorial_id, title, asal_daerah, history, bahan_pembuatan, sources, views} = req.body
     try {
-        const images = await prisma.images.create({
+        const articles = await prisma.articles.create({
             data: {
-                image: image,
-                label: label,
-                user_id: user_id
+                user_id: user_id,
+                image_id: image_id,
+                tutorial_id: tutorial_id,
+                title: title,
+                asal_daerah: asal_daerah,
+                history: history,
+                bahan_pembuatan: bahan_pembuatan,
+                sources: sources,
+                views: views
             }
         })
         res.status(200).json({
             message: 'Add data success',
-            data: images
+            data: articles
         })
     } catch (error) {
         res.status(500).json({
@@ -75,17 +62,17 @@ const createImage = async (req, res) => {
     }
 }
 
-const updateImage = async (req, res) => {
+const updateArticle = async (req, res) => {
     const {id} = req.params
     const {body} = req
     try {
-        const images = await prisma.images.update({
+        const articles = await prisma.articles.update({
             where: {id: Number(id)},
             data: body
         })
         res.status(200).json({
             message: 'Update data success',
-            data: images
+            data: articles
         })
     } catch (error) {
         res.status(500).json({
@@ -95,14 +82,14 @@ const updateImage = async (req, res) => {
     }
 }
 
-const deleteImage = async (req, res) => {
+const deleteArticle = async (req, res) => {
     const {id} = req.params
     try {
-        const images = await prisma.images.delete({
+        const articles = await prisma.articles.delete({
             where: {id: Number(id)}
         })
         res.status(200).json({
-            message: 'Delete data success',
+            message: 'Delete data success'
         })
     } catch (error) {
         res.status(500).json({
@@ -113,10 +100,9 @@ const deleteImage = async (req, res) => {
 }
 
 module.exports = {
-    getAllImages,
-    getTwoImages,
-    getImageById,
-    createImage,
-    updateImage,
-    deleteImage
+    getAllArticles,
+    getArticleById,
+    createArticle,
+    updateArticle,
+    deleteArticle
 }
