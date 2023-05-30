@@ -1,26 +1,43 @@
-const bcrypt = require("bcryptjs");
-const { PrismaClient } = require('@prisma/client')
-const jwt_token = require('../middleware/auth')
+const { PrismaClient } = require('@prisma/client');
+const {jwt_payload} = require('./functions');
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
+
+// GET request that get all the quizzes
+const getQuizzes = async (req, res) => {
+    try{
+        const quizzes = await prisma.quizzes.findMany({
+        });
+        return res.status(200).json(quizzes);
+    }catch (err) {
+        return res.status(500).send({ "error": `${err}` });
+    };
+};
 
 // POST request that handles register
 const postQuizzes = async (req, res) => {
     const {level} = req.params;
-    const {title, thumbnail, total_questions} = req.body
-    
-    const user = await prisma.quizzes.create({
+    const {thumbnail} = req.body;
+    let {total_question} = req.body;
+    total_question = parseInt(total_question);
+
+    const quizzes = await prisma.quizzes.create({
         data: {
-          title: title,
           thumbnail: thumbnail,
           level: level,
-          user_id: jwt_token.user_id,
-          total_questions: total_questions
+          status: true,
+        //   user_id: ,
+          total_question: total_question,
+          users: {
+            connect: {
+                id: 1,
+            }
+          }
         },
-    })
+    });
     
-    res.status(201).json(user)
-}
+    res.status(201).json(quizzes);
+};
 
 
 module.exports = {

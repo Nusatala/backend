@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const {getQuizzes, postQuizzes} = require('../controllers/users')
+const {getQuizzes, postQuizzes} = require('../controllers/quizzes')
+const auth = require('../middleware/auth')
 
-router.get('/quizzes/:level', getQuizzes)
-router.post('/quizzes/:level', postQuizzes)
+router.get('/', auth, getQuizzes)
+router.post('/:level', auth, postQuizzes)
+
 
 module.exports = router

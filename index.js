@@ -1,11 +1,14 @@
 const express = require('express');
 const app = express();
+
 const usersRoutes = require('./routes/users')
 const faqsRoutes = require('./routes/faqs')
 const testimonialsRoutes = require('./routes/testimonials')
 const tutorialsRoutes = require('./routes/tutorials')
 const imagesRoutes = require('./routes/images')
 const articlesRoutes = require('./routes/articles')
+const quizzesRoutes = require('./routes/quizzes')
+
 const dotenv = require('dotenv');
 var bodyParser = require('body-parser');
 
@@ -41,6 +44,8 @@ app.use('/testimonials', testimonialsRoutes)
 app.use('/tutorials', tutorialsRoutes)
 app.use('/images', imagesRoutes)
 app.use('/articles', articlesRoutes)
+app.use('/quizzes', quizzesRoutes)
+
 const PORT = process.env.PORT || 4111;
 app.listen(PORT, console.log('Server has started at: http://localhost:' + PORT));
 
