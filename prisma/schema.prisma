@@ -28,21 +28,21 @@ model users {
 }
 
 model articles {
-  id               Int        @id @default(autoincrement())
-  user_id          Int
-  image_id         Int
-  tutorial_id      Int?
-  title            String     @db.VarChar(255)
-  asal_daerah      String     @db.VarChar(255)
-  history          String     @db.Text
-  bahan_pembuatan  String     @db.VarChar(255)
-  sources          String     @db.Text
-  views            Int
-  created_at       DateTime?  @default(now()) @db.Timestamp(0)
-  updated_at       DateTime?  @default(now()) @db.Timestamp(0)
-  users            users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_1")
-  images           images     @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_2")
-  tutorials        tutorials? @relation(fields: [tutorial_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_3")
+  id              Int        @id @default(autoincrement())
+  user_id         Int
+  image_id        Int
+  tutorial_id     Int?
+  title           String     @db.VarChar(255)
+  asal_daerah     String     @db.VarChar(255)
+  history         String     @db.Text
+  bahan_pembuatan String     @db.VarChar(255)
+  sources         String     @db.Text
+  views           Int
+  created_at      DateTime?  @default(now()) @db.Timestamp(0)
+  updated_at      DateTime?  @default(now()) @db.Timestamp(0)
+  users           users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_1")
+  images          images     @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_2")
+  tutorials       tutorials? @relation(fields: [tutorial_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_3")
 
   @@index([image_id], map: "image_id")
   @@index([tutorial_id], map: "tutorial_id")
@@ -148,4 +148,3 @@ model tutorials {
 
   @@index([image_id], map: "image_id")
 }
-
