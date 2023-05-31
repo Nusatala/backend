@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 
 // POST request that handles register
 const registerUser = async (req, res) => {
-    const {name, username, email, password, role, photo} = req.body
+    const {name, username, email, password, photo} = req.body
     
     // Validate if email/username exist in our database
     const emailCheck = await prisma.users.findFirst({
@@ -33,15 +33,14 @@ const registerUser = async (req, res) => {
               email: email,
               username: username,
               password: hashedPassword,
-              role: 2,
+              role_id: 2,
               photo: photo
             },
-        })
+        });
     
-        res.status(201).json(user)
+        res.status(201).json(user);
     }
 }
-
 
 // POST request that handles login
 const loginUser = async (req, res, next) => {
@@ -80,8 +79,50 @@ const loginUser = async (req, res, next) => {
     }
 }
 
+const putUser = async (req, res) => {
+    try{
+        const {name, photo} = req.body;
+        const token = req.get("Authorization");
+        const jwt_payload = jwt.verify(token, process.env.SECRET_KEY);
+
+        const user = await prisma.users.update({
+            where: {
+                id: jwt_payload.user_id
+            },
+            data: {
+                name: name,
+                photo: photo
+            },
+        });
+        
+        return res.status(200).json(user);
+    } catch (err) {
+        res.status(500).send({ "error": `${err}` })
+    }
+}
+
+const deleteUser = async (req, res) => {
+    try{
+        const token = req.get("Authorization");
+        const jwt_payload = jwt.verify(token, process.env.SECRET_KEY);
+
+        const user = await prisma.users.delete({
+            where: {
+                id: jwt_payload.user_id
+            },
+        });
+        
+        return res.status(200).json(user);
+    } catch (err) {
+        res.status(500).send({ "error": `${err}` })
+    }
+}
+
+
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    putUser,
+    deleteUser
 }
