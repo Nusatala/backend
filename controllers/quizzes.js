@@ -1,5 +1,5 @@
+const jwt = require("jsonwebtoken");
 const { PrismaClient } = require('@prisma/client');
-const {jwt_payload} = require('./functions');
 
 const prisma = new PrismaClient();
 
@@ -20,19 +20,18 @@ const postQuizzes = async (req, res) => {
     const {thumbnail} = req.body;
     let {total_question} = req.body;
     total_question = parseInt(total_question);
+    
+    const token = req.get("Authorization");
+    const jwt_payload = jwt.verify(token, process.env.SECRET_KEY);
+    console.log(`jwt: ${jwt_payload.user_id}`);
 
     const quizzes = await prisma.quizzes.create({
         data: {
           thumbnail: thumbnail,
           level: level,
           status: true,
-        //   user_id: ,
+          user_id: jwt_payload.user_id,
           total_question: total_question,
-          users: {
-            connect: {
-                id: 1,
-            }
-          }
         },
     });
     
