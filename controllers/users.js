@@ -6,39 +6,43 @@ const prisma = new PrismaClient()
 
 // POST request that handles register
 const registerUser = async (req, res) => {
-    const {name, username, email, password, photo} = req.body
-    
-    // Validate if email/username exist in our database
-    const emailCheck = await prisma.users.findFirst({
-        where: {
-            email: email
-        },
-    });
-    
-    // Validate if username exist in our database
-    const usernameCheck = await prisma.users.findFirst({
-        where: {
-            username: username
-        },
-    });
-
-    if(usernameCheck||emailCheck){
-        res.status(409).json({message: "The email or username you use already exist"})
-    } else{
-        const hashedPassword = await bcrypt.hash(password, 10);
+    try{
+        const {name, username, email, password, photo} = req.body
         
-        const user = await prisma.users.create({
-            data: {
-              name: name,
-              email: email,
-              username: username,
-              password: hashedPassword,
-              role_id: 2,
-              photo: photo
+        // Validate if email/username exist in our database
+        const emailCheck = await prisma.users.findFirst({
+            where: {
+                email: email
             },
         });
-    
-        res.status(201).json(user);
+        
+        // Validate if username exist in our database
+        const usernameCheck = await prisma.users.findFirst({
+            where: {
+                username: username
+            },
+        });
+
+        if(usernameCheck||emailCheck){
+            res.status(409).json({message: "The email or username you use already exist"})
+        } else{
+            const hashedPassword = await bcrypt.hash(password, 10);
+            
+            const user = await prisma.users.create({
+                data: {
+                    name: name,
+                    email: email,
+                    username: username,
+                    password: hashedPassword,
+                    role_id: 2,
+                    photo: photo
+                },
+            });
+        
+            res.status(201).json(user);
+        }
+    } catch (err) {
+        res.status(500).send({ "error": `${err}` })
     }
 }
 
@@ -101,6 +105,47 @@ const putUser = async (req, res) => {
     }
 }
 
+const changePass = async (req, res) => {
+    try{
+        const {currentPassword} = req.body;
+        let {newPassword} = req.body;
+        const token = req.get("Authorization");
+        const jwt_payload = jwt.verify(token, process.env.SECRET_KEY);
+
+        if(!(currentPassword||newPassword)){
+            return res.status(400).json({ "message": "All inputs is required"})
+        }
+
+        const readUser = await prisma.users.findUnique({
+            where: {
+                id: jwt_payload.user_id
+            },
+        });
+        console.log(currentPassword, readUser.password)
+        if((await bcrypt.compare(currentPassword, readUser.password))){
+            newPassword = await bcrypt.hash(newPassword, 10)
+            const user = await prisma.users.update({
+                where: {
+                    id: jwt_payload.user_id
+                },
+                data: {
+                    password: newPassword
+                },
+            });
+            return res.status(200).json(user);
+        } else{
+            return res.status(403).json({ "message": "Your current password is wrong" });
+        }
+        
+    } catch (err) {
+        res.status(500).send({ "error": `${err}` })
+    }
+}
+
+const logout = async (req, res) => {
+    return res.status(200).json({message: "Logout successful"});
+};
+
 const deleteUser = async (req, res) => {
     try{
         const token = req.get("Authorization");
@@ -124,5 +169,7 @@ module.exports = {
     registerUser,
     loginUser,
     putUser,
+    changePass,
+    logout,
     deleteUser
 }
