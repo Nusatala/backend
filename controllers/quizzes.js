@@ -46,7 +46,9 @@ const getQuestions = async (req, res) => {
             id: id
         }
     })
-
+    if(!questions){
+        return res.status(404).json({ message: `There is no question with id ${id}`})
+    }
     return res.status(200).json(questions);
 };
 

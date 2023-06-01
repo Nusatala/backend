@@ -4,7 +4,7 @@ const prisma = new PrismaClient()
 
 const config = process.env;
 
-const verifyToken = async (req, res, next) => {
+const verifyUser = async (req, res, next) => {
   const token = req.get("Authorization");
   
   if (!token) {
@@ -27,4 +27,34 @@ const verifyToken = async (req, res, next) => {
   return next();
 };
 
-module.exports = verifyToken;
+const verifyAdmin = async (req, res, next) => {
+  const token = req.get("Authorization");
+  
+  if (!token) {
+    return res.status(403).json({message: "Token is required for authentication"});
+  }
+  try {
+    let user = jwt.verify(token, config.SECRET_KEY);
+    // User Id check
+    let userTable = await prisma.users.findUnique({
+      where: {
+          id: user.user_id
+      }
+    })
+
+    if(userTable.role_id !== 1){
+      return res.status(403).json({ message: 'You dont have permission to access this endpoint'})
+    }
+    if(!userTable){
+      return res.status(400).json({ message: `There is no user with username ${user.username}`})
+    }
+  } catch (err) {
+    return res.status(401).json({message: "Invalid Token"});
+  }
+  return next();
+};
+
+module.exports = {
+  verifyUser, 
+  verifyAdmin
+};
