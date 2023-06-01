@@ -8,6 +8,7 @@ const tutorialsRoutes = require('./routes/tutorials')
 const imagesRoutes = require('./routes/images')
 const articlesRoutes = require('./routes/articles')
 const quizzesRoutes = require('./routes/quizzes')
+const productsRoutes = require('./routes/products')
 
 const dotenv = require('dotenv');
 var bodyParser = require('body-parser');
@@ -45,6 +46,7 @@ app.use('/tutorials', tutorialsRoutes)
 app.use('/images', imagesRoutes)
 app.use('/articles', articlesRoutes)
 app.use('/quizzes', quizzesRoutes)
+app.use('/products', productsRoutes)
 
 const PORT = process.env.PORT || 4111;
 app.listen(PORT, console.log('Server has started at: http://localhost:' + PORT));
