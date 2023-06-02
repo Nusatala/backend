@@ -47,7 +47,11 @@ app.use('/images', imagesRoutes)
 app.use('/articles', articlesRoutes)
 app.use('/quizzes', quizzesRoutes)
 app.use('/products', productsRoutes)
+app.use(function (req, res, next) {
+    return res.status(200).send("Welcome")
+    next()
+  })
 
-const PORT = process.env.PORT || 4111;
+const PORT = process.env.PORT;
 app.listen(PORT, console.log('Server has started at: http://localhost:' + PORT));
 
