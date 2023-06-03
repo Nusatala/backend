@@ -18,8 +18,8 @@ const getAllTutorials = async (req, res) => {
 }
 
 const getTutorialById = async (req, res) => {
-    const {id} = req.params
     try {
+        const {id} = req.params
         const tutorials = await prisma.tutorials.findUnique({
             where: {id: Number(id)}
         })
@@ -39,15 +39,15 @@ const getTutorialById = async (req, res) => {
 }
 
 const createTutorial = async (req, res) => {
-    const {image_id, link} = req.body
     try {
+        const {image_id, link} = req.body
         const tutorials = await prisma.tutorials.create({
             data: {
                 image_id: image_id,
                 link: link
             }
         })
-        res.status(200).json({
+        res.status(201).json({
             message: 'Add data success',
             data: tutorials
         })
@@ -60,9 +60,9 @@ const createTutorial = async (req, res) => {
 }
 
 const updateTutorial = async (req, res) => {
-    const {id} = req.params
-    const {body} = req
     try {
+        const {id} = req.params
+        const {body} = req
         const tutorials = await prisma.tutorials.update({
             where: {id: Number(id)},
             data: body
@@ -80,8 +80,8 @@ const updateTutorial = async (req, res) => {
 }
 
 const deleteTutorial = async (req, res) => {
-    const {id} = req.params
     try {
+        const {id} = req.params
         const tutorials = await prisma.tutorials.delete({
             where: {id: Number(id)}
         })

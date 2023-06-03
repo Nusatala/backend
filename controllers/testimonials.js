@@ -1,4 +1,5 @@
 const {PrismaClient} = require('@prisma/client')
+const jwt = require('jsonwebtoken')
 const prisma = new PrismaClient
 
 const getTestimonials = async (req, res) => {
@@ -35,16 +36,18 @@ const getById = async (req, res) => {
 
 const createTestimonial = async (req, res) => {
     try {
-        const {user_id, testimony, rating} = req.body
+        const {testimony, rating} = req.body
+        const token = req.get('Authorization')
+        const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const testimonials = await prisma.testimonials.create({
             data: {
-                user_id: user_id,
+                user_id: jwt_payload.user_id,
                 testimony: testimony,
                 rating: rating
             }
         })
-        res.status(200).json({
-            message: 'Input success',
+        res.status(201).json({
+            message: 'Add data success',
             data: testimonials
         })
     } catch (error) {
@@ -56,12 +59,18 @@ const createTestimonial = async (req, res) => {
 }
 
 const updateTestimonial = async (req, res) => {
-    const {id} = req.params
-    const {body} = req
     try {
+        const {id} = req.params
+        const {testimony, rating} = req.body
+        const token = req.get('Authorization')
+        const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const testimonials = await prisma.testimonials.update({
             where: {id: Number(id)},
-            data: body
+            data: {
+                user_id: jwt_payload.user_id,
+                testimony: testimony,
+                rating: rating
+            }
         })
         res.status(200).json({
             message: 'Update data successful',
@@ -76,13 +85,13 @@ const updateTestimonial = async (req, res) => {
 }
 
 const deleteTestimonial = async (req, res) => {
-    const {id} = req.params
     try {
+        const {id} = req.params
         const testimonials = await prisma.testimonials.delete({
             where: {id: Number(id)}
         })
         res.status(200).json({
-            message: 'Success'
+            message: 'Delete data success'
         })
     } catch (error) {
         res.status(500).json({

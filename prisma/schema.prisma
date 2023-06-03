@@ -8,9 +8,9 @@ datasource db {
 }
 
 model roles {
-  id            Int           @id @default(autoincrement())
-  name          String?
-  users         users[]
+  id    Int     @id @default(autoincrement())
+  name  String?
+  users users[]
 }
 
 model users {
@@ -44,7 +44,7 @@ model articles {
   history         String     @db.Text
   bahan_pembuatan String     @db.VarChar(255)
   sources         String     @db.Text
-  views           Int        @default(0)
+  views           Int?       @default(0)
   created_at      DateTime?  @default(now()) @db.Timestamp(0)
   updated_at      DateTime?  @default(now()) @db.Timestamp(0)
   users           users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_1")
@@ -83,36 +83,36 @@ model images {
 }
 
 model products {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   user_id     Int?
-  name        String    @db.VarChar(255)
-  thumbnail   String?   @db.VarChar(255)
-  description String?   @db.VarChar(255)
-  price       Decimal   @db.Decimal(11, 2)
+  name        String   @db.VarChar(255)
+  thumbnail   String?  @db.VarChar(255)
+  description String?  @db.VarChar(255)
+  price       Decimal  @db.Decimal(11, 2)
   stock       Int
-  link        String?   @db.VarChar(255)
-  rating      Float?    @db.Float
-  created_at  DateTime  @default(now()) @db.Timestamp(0)
-  updated_at  DateTime  @default(now()) @db.Timestamp(0)
-  users       users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "products_ibfk_1")
+  link        String?  @db.VarChar(255)
+  rating      Float?   @db.Float
+  created_at  DateTime @default(now()) @db.Timestamp(0)
+  updated_at  DateTime @default(now()) @db.Timestamp(0)
+  users       users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "products_ibfk_1")
 
   @@index([user_id], map: "user_id")
 }
 
 model quiz_questions {
-  id             Int       @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   quiz_id        Int
   status         Boolean?
-  question_image String?   @db.VarChar(255)
-  question_text  String?   @db.VarChar(255)
-  option1        String    @db.VarChar(255)
-  option2        String    @db.VarChar(255)
-  option3        String    @db.VarChar(255)
-  option4        String    @db.VarChar(255)
-  real_answer    String    @db.VarChar(255)
-  created_at     DateTime  @default(now()) @db.Timestamp(0)
-  updated_at     DateTime  @default(now()) @db.Timestamp(0)
-  quizzes        quizzes?  @relation(fields: [quiz_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "quiz_questions_ibfk_1")
+  question_image String?  @db.VarChar(255)
+  question_text  String?  @db.VarChar(255)
+  option1        String   @db.VarChar(255)
+  option2        String   @db.VarChar(255)
+  option3        String   @db.VarChar(255)
+  option4        String   @db.VarChar(255)
+  real_answer    String   @db.VarChar(255)
+  created_at     DateTime @default(now()) @db.Timestamp(0)
+  updated_at     DateTime @default(now()) @db.Timestamp(0)
+  quizzes        quizzes? @relation(fields: [quiz_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "quiz_questions_ibfk_1")
 
   @@index([quiz_id], map: "quiz_id")
 }

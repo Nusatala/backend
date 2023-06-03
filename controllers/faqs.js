@@ -1,26 +1,26 @@
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient
+const jwt = require('jsonwebtoken')
 
 const createFaq = async (req, res) => {
     try {
-        const {user_id, question, answer} = req.body
-        if(!user_id || !question || !answer){
-            throw new Error('Data Tidak Boleh Kosong')
-        }
+        const { question, answer} = req.body
+        const token = req.get('Authorization')
+        const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const faqs = await prisma.faqs.create({
             data: {
-                user_id: user_id,
+                user_id: jwt_payload.user_id,
                 question: question,
                 answer: answer
             }
         })
-        res.status(200).json({
-            message: 'Berhasil input data faq',
+        res.status(201).json({
+            message: 'Add Data success',
             data: faqs
         })
     } catch (error) {
-        res.status(400).json({
-            message: 'Terjadi Kesalahan',
+        res.status(500).json({
+            message: 'Internal server error',
             error: error.message
         })
     }
@@ -42,8 +42,8 @@ const getFaqs = async (req, res) =>{
 }
 
 const getById = async (req, res) =>{
-    const {id} = req.params
     try {
+        const {id} = req.params
         const faqs = await prisma.faqs.findUnique({
             where: {id: Number(id)}
         })
@@ -60,12 +60,18 @@ const getById = async (req, res) =>{
 }
 
 const UpdateFaq = async (req, res) => {
-    const {id} = req.params
-    const {body} = req
     try {
+        const {id} = req.params
+        const {question, answer} = req.body
+        const token = req.get('Authorization')
+        const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const faqs = await prisma.faqs.update({
             where: {id: Number(id)},
-            data: body
+            data: {
+                user_id: jwt_payload.user_id,
+                question: question,
+                answer: answer
+            }
         })
         res.status(200).json({
             message: 'Update data successful',
@@ -80,13 +86,13 @@ const UpdateFaq = async (req, res) => {
 }
 
 const deleteFaq = async (req, res) => {
-    const {id} = req.params
     try {
+        const {id} = req.params
         const faqs = await prisma.faqs.delete({
             where:{id: Number(id)}
         })
         res.status(200).json({
-            message: 'Berhasil'
+            message: 'Delete data success'
         })
     } catch (error) {
         res.status(500).json({
