@@ -1,11 +1,12 @@
-const express = require('express')
-const {createFaq, getFaqs, getById, UpdateFaq, deleteFaq} = require('../controllers/faqs')
-const router = express.Router()
+const express = require('express');
+const {createFaq, getFaqs, getById, UpdateFaq, deleteFaq} = require('../controllers/faqs');
+const router = express.Router();
+const {verifyUser, verifyAdmin} = require('../middleware/auth');
 
-router.post('/', createFaq)
-router.get('/', getFaqs)
-router.get('/:id', getById)
-router.put('/:id', UpdateFaq)
-router.delete('/:id', deleteFaq)
+router.post('/', verifyAdmin, createFaq);
+router.get('/', verifyUser, getFaqs);
+router.get('/:id', verifyUser, getById);
+router.put('/:id', verifyAdmin, UpdateFaq);
+router.delete('/:id', verifyAdmin, deleteFaq);
 
-module.exports = router
+module.exports = router;

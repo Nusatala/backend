@@ -1,11 +1,12 @@
-const express = require('express')
-const {getAllTutorials, getTutorialById, createTutorial, updateTutorial, deleteTutorial} = require('../controllers/tutorials')
-const router = express.Router()
+const express = require('express');
+const {getAllTutorials, getTutorialById, createTutorial, updateTutorial, deleteTutorial} = require('../controllers/tutorials');
+const router = express.Router();
+const {verifyUser, verifyAdmin} = require('../middleware/auth');
 
-router.get('/', getAllTutorials)
-router.get('/:id', getTutorialById)
-router.post('/', createTutorial)
-router.put('/:id', updateTutorial)
-router.delete('/:id', deleteTutorial)
+router.get('/', verifyUser, getAllTutorials);
+router.get('/:id', verifyUser, getTutorialById);
+router.post('/', verifyAdmin, createTutorial);
+router.put('/:id', verifyAdmin, updateTutorial);
+router.delete('/:id', verifyAdmin, deleteTutorial);
 
-module.exports = router
+module.exports = router;

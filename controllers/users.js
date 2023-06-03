@@ -143,6 +143,7 @@ const changePass = async (req, res) => {
 }
 
 const logout = async (req, res) => {
+    delete req.headers['Authorization'];
     return res.status(200).json({message: "Logout successful"});
 };
 
