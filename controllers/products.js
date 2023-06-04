@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 // POST request that handles products
 const postProducts = async (req, res) => {
     try{
-        const {name, thumbnail, description, link} = req.body;
+        const {name, thumbnail, description, link, label} = req.body;
         let {price, stock, rating} = req.body;
         price = parseInt(price);
         stock = parseInt(stock);
@@ -17,6 +17,7 @@ const postProducts = async (req, res) => {
         const product = await prisma.products.create({
             data: {
                 user_id: jwt_payload.user_id,
+                label: label,
                 name: name,
                 thumbnail: thumbnail,
                 description: description,
@@ -58,7 +59,7 @@ const getProductById = async (req, res) => {
 
 const putProducts = async (req, res) => {
     try{
-        const {name, thumbnail, description, link} = req.body;
+        const {name, thumbnail, description, link, label} = req.body;
         let {price, stock, rating} = req.body;
         price = parseInt(price);
         stock = parseInt(stock);
@@ -75,6 +76,7 @@ const putProducts = async (req, res) => {
             },
             data: {
                 user_id: jwt_payload.user_id,
+                label: label,
                 name: name,
                 thumbnail: thumbnail,
                 description: description,

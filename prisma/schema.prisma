@@ -85,6 +85,7 @@ model images {
 model products {
   id          Int       @id @default(autoincrement())
   user_id     Int?
+  label       String    @db.VarChar(255)
   name        String    @db.VarChar(255)
   thumbnail   String?   @db.VarChar(255)
   description String?   @db.VarChar(255)
