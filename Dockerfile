@@ -13,4 +13,4 @@ RUN npx prisma migrate deploy
 RUN npx prisma generate
 
 EXPOSE 8080
-CMD [ "node", "index.js" ]
+CMD [ "npm", "start" ]
