@@ -1,4 +1,5 @@
 const {PrismaClient} = require('@prisma/client')
+const jwt = require('jsonwebtoken')
 const prisma = new PrismaClient()
 
 const getAllImages = async (req, res) => {
@@ -16,8 +17,8 @@ const getAllImages = async (req, res) => {
     }
 }
 const getTwoImages = async (req, res) => {
-    const {label} = req.params
     try {
+        const {label} = req.params
         const images = await prisma.images.findMany({
             where: {label: label},
             take: 2
@@ -36,8 +37,8 @@ const getTwoImages = async (req, res) => {
 }
 
 const getImageById = async (req, res) => {
-    const {id} = req.params
     try {
+        const {id} = req.params
         const images = await prisma.images.findUnique({
             where: {id: Number(id)}
         })
@@ -54,16 +55,18 @@ const getImageById = async (req, res) => {
 }
 
 const createImage = async (req, res) => {
-    const {image, label, user_id} = req.body
     try {
+        const {image, label} = req.body
+        const token = req.get('Authorization')
+        const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const images = await prisma.images.create({
             data: {
+                user_id: jwt_payload.user_id,
                 image: image,
-                label: label,
-                user_id: user_id
+                label: label
             }
         })
-        res.status(200).json({
+        res.status(201).json({
             message: 'Add data success',
             data: images
         })
@@ -76,12 +79,18 @@ const createImage = async (req, res) => {
 }
 
 const updateImage = async (req, res) => {
-    const {id} = req.params
-    const {body} = req
     try {
+        const {id} = req.params
+        const {image, label} = req.body
+        const token = req.get('Authorization')
+        const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const images = await prisma.images.update({
             where: {id: Number(id)},
-            data: body
+            data: {
+                user_id: jwt_payload.user_id,
+                label: label,
+                image: image
+            }
         })
         res.status(200).json({
             message: 'Update data success',
@@ -96,8 +105,8 @@ const updateImage = async (req, res) => {
 }
 
 const deleteImage = async (req, res) => {
-    const {id} = req.params
     try {
+        const {id} = req.params
         const images = await prisma.images.delete({
             where: {id: Number(id)}
         })
