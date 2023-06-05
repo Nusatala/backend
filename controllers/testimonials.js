@@ -5,38 +5,41 @@ const prisma = new PrismaClient
 const getTestimonials = async (req, res) => {
     try {
         const testimonials = await prisma.testimonials.findMany()
-        res.status(200).json({
-            message: 'Get data success',
+        return res.status(200).json({
             data: testimonials
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
 const getById = async (req, res) => {
-    const {id} = req.params
     try {
+        const {id} = req.params
         const testimonials = await prisma.testimonials.findUnique({
             where: {id: Number(id)}
         })
-        res.status(200).json({
-            message: 'Data found',
+        if(!testimonials){
+            return res.status(404).json({
+                message: 'Data Not Found'
+            })
+        }
+        return res.status(200).json({
             data: testimonials
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
 
 const createTestimonial = async (req, res) => {
     try {
-        const {testimony, rating} = req.body
+        const {testimony} = req.body
+        let {rating} = req.body
+        rating = Number(rating)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const testimonials = await prisma.testimonials.create({
@@ -46,14 +49,12 @@ const createTestimonial = async (req, res) => {
                 rating: rating
             }
         })
-        res.status(201).json({
-            message: 'Add data success',
+        return res.status(201).json({
             data: testimonials
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         }) 
     }
 }
@@ -61,7 +62,9 @@ const createTestimonial = async (req, res) => {
 const updateTestimonial = async (req, res) => {
     try {
         const {id} = req.params
-        const {testimony, rating} = req.body
+        const {testimony} = req.body
+        let {rating} = req.body
+        rating = Number(rating)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const testimonials = await prisma.testimonials.update({
@@ -72,14 +75,12 @@ const updateTestimonial = async (req, res) => {
                 rating: rating
             }
         })
-        res.status(200).json({
-            message: 'Update data successful',
+        return res.status(200).json({
             data: testimonials
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -87,16 +88,29 @@ const updateTestimonial = async (req, res) => {
 const deleteTestimonial = async (req, res) => {
     try {
         const {id} = req.params
-        const testimonials = await prisma.testimonials.delete({
+        const testimonials = await prisma.testimonials.findUnique({
             where: {id: Number(id)}
         })
-        res.status(200).json({
+        if(!testimonials){
+            return res.status(404).json({
+                message: 'Data Not Found'
+            })
+        }
+        await prisma.testimonials.update({
+            where: {id: Number(id)},
+            data:{
+                user_id: null
+            }
+        })
+        await prisma.testimonials.delete({
+            where: {id: Number(id)}
+        })
+        return res.status(200).json({
             message: 'Delete data success'
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal Server Error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }

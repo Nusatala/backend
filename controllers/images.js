@@ -5,14 +5,12 @@ const prisma = new PrismaClient()
 const getAllImages = async (req, res) => {
     try {
         const images = await prisma.images.findMany();
-        res.status(200).json({
-            message: 'Get data success',
+        return res.status(200).json({
             data: images
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -23,15 +21,13 @@ const getTwoImages = async (req, res) => {
             where: {label: label},
             take: 2
         })
-        res.status(200).json({
-            message: 'Get data success',
+        return res.status(200).json({
             data: images
         })
         
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -42,14 +38,17 @@ const getImageById = async (req, res) => {
         const images = await prisma.images.findUnique({
             where: {id: Number(id)}
         })
-        res.status(200).json({
-            message: 'Get data success',
+        if(!images){
+            return res.status(404).json({
+                message: 'Data Not Found'
+            })
+        }
+        return res.status(200).json({
             data: images
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -66,14 +65,12 @@ const createImage = async (req, res) => {
                 label: label
             }
         })
-        res.status(201).json({
-            message: 'Add data success',
+        return res.status(201).json({
             data: images
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -92,14 +89,12 @@ const updateImage = async (req, res) => {
                 image: image
             }
         })
-        res.status(200).json({
-            message: 'Update data success',
+        return res.status(200).json({
             data: images
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -107,16 +102,29 @@ const updateImage = async (req, res) => {
 const deleteImage = async (req, res) => {
     try {
         const {id} = req.params
-        const images = await prisma.images.delete({
+        const images = await prisma.images.findUnique({
             where: {id: Number(id)}
         })
-        res.status(200).json({
+        if(!images){
+            return res.status(404).json({
+                message: 'Data Not Found'
+            })
+        }
+        await prisma.images.update({
+            where: {id: Number(id)},
+            data:{
+                user_id: null
+            }
+        })
+        await prisma.images.delete({
+            where: {id: Number(id)}
+        })
+        return res.status(200).json({
             message: 'Delete data success',
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }

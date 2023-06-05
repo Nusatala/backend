@@ -14,14 +14,12 @@ const createFaq = async (req, res) => {
                 answer: answer
             }
         })
-        res.status(201).json({
-            message: 'Add Data success',
+        return res.status(201).json({
             data: faqs
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            error: error.message
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -29,14 +27,12 @@ const createFaq = async (req, res) => {
 const getFaqs = async (req, res) =>{
     try {
         const faqs = await prisma.faqs.findMany()
-        res.status(200).json({
-            message: 'Get data success',
+        return res.status(200).json({
             data: faqs
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -47,14 +43,17 @@ const getById = async (req, res) =>{
         const faqs = await prisma.faqs.findUnique({
             where: {id: Number(id)}
         })
-        res.status(200).json({
-            message: 'Data found',
+        if(!faqs){
+            return res.status(404).json({
+                message: 'Data Not Found'
+            })
+        }
+        return res.status(200).json({
             data: faqs
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -73,14 +72,12 @@ const UpdateFaq = async (req, res) => {
                 answer: answer
             }
         })
-        res.status(200).json({
-            message: 'Update data successful',
+        return res.status(200).json({
             data: faqs
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -88,16 +85,29 @@ const UpdateFaq = async (req, res) => {
 const deleteFaq = async (req, res) => {
     try {
         const {id} = req.params
-        const faqs = await prisma.faqs.delete({
+        const faqs = await prisma.faqs.findUnique({
             where:{id: Number(id)}
         })
-        res.status(200).json({
+        if(!faqs){
+            return res.status(404).json({
+                message: 'Data Not Found'
+            })
+        }
+        await prisma.faqs.update({
+            where: {id: Number(id)},
+            data:{
+                user_id: null
+            }
+        })
+        await prisma.faqs.delete({
+            where: {id: Number(id)}
+        })
+        return res.status(200).json({
             message: 'Delete data success'
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }

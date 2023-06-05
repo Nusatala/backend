@@ -13,14 +13,12 @@ const counterViews = async (id) => {
 const getAllArticles = async (req, res) => {
     try {
         const articles = await prisma.articles.findMany()
-        res.status(200).json({
-            message: 'Get data success',
+        return res.status(200).json({
             data: articles
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error.message
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -31,17 +29,20 @@ const getArticleById = async (req, res) => {
         const articles = await prisma.articles.findUnique({
             where: {id: Number(id)},
         })
+        if(!articles){
+            return res.status(404).json({
+                message: 'Data Not Found'
+            })
+        }
         if(articles){
             await counterViews(articles.id)
         }
-        res.status(200).json({
-            message: 'Get data success',
+        return res.status(200).json({
             data: articles
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error.message
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -49,6 +50,8 @@ const getArticleById = async (req, res) => {
 const createArticle = async (req, res) => {
     try {
         const {image_id, tutorial_id, title, asal_daerah, history, bahan_pembuatan, sources} = req.body
+        image_id = Number(image_id)
+        tutorial_id = Number(tutorial_id)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const articles = await prisma.articles.create({
@@ -63,14 +66,12 @@ const createArticle = async (req, res) => {
                 sources: sources,
             }
         })
-        res.status(201).json({
-            message: 'Add data success',
+        return res.status(201).json({
             data: articles
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error.message
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -79,6 +80,8 @@ const updateArticle = async (req, res) => {
     try {
         const {id} = req.params
         const {image_id, tutorial_id, title, asal_daerah, history, bahan_pembuatan, sources} = req.body
+        image_id = Number(image_id)
+        tutorial_id = Number(tutorial_id)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const articles = await prisma.articles.update({
@@ -94,14 +97,12 @@ const updateArticle = async (req, res) => {
                 sources: sources,
             }
         })
-        res.status(200).json({
-            message: 'Update data success',
+        return res.status(200).json({
             data: articles
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error.message
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
@@ -109,16 +110,30 @@ const updateArticle = async (req, res) => {
 const deleteArticle = async (req, res) => {
     try {
         const {id} = req.params
-        const articles = await prisma.articles.delete({
+        const articles = await prisma.articles.findUnique({
             where: {id: Number(id)}
         })
-        res.status(200).json({
+
+        if(!articles){
+            return res.status(404).json({
+                message: 'Data Not Found'
+            })
+        }
+        await prisma.articles.update({
+            where: {id: Number(id)},
+            data: {
+                user_id: null
+            }
+        })
+        await prisma.articles.delete({
+            where:{id: Number(id)}
+        })
+        return res.status(200).json({
             message: 'Delete data success'
         })
     } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error',
-            serverMessage: error.message
+        return res.status(500).json({
+            "error": `${error}`
         })
     }
 }
