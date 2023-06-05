@@ -107,7 +107,7 @@ const deleteImage = async (req, res) => {
         })
         if(!images){
             return res.status(404).json({
-                message: 'Data Not Found'
+                message: 'Data not found'
             })
         }
         await prisma.images.update({
