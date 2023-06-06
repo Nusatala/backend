@@ -6,7 +6,7 @@ const getAllTutorials = async (req, res) => {
     try {
         const tutorials = await prisma.tutorials.findMany();
         return res.status(200).json({
-            data: tutorials
+            tutorials
         })
     } catch (error) {
         return res.status(500).json({
@@ -17,15 +17,15 @@ const getAllTutorials = async (req, res) => {
 
 const getTutorialById = async (req, res) => {
     try {
-        
+        const id = parseInt(req.params.id)
         const tutorials = await prisma.tutorials.findUnique({
-            where: {id: parseInt(req.params.id)}
+            where: {id: id}
         })
         if(!tutorials){
             return res.status(404).json({message: 'Data Not Found'})
         }
         return res.status(200).json({
-            data: tutorials
+            tutorials
         })
     } catch (error) {
         return res.status(500).json({
@@ -46,7 +46,7 @@ const createTutorial = async (req, res) => {
             }
         })
         return res.status(201).json({
-            data: tutorials
+            tutorials
         })
     } catch (error) {
         return res.status(500).json({
@@ -57,18 +57,19 @@ const createTutorial = async (req, res) => {
 
 const updateTutorial = async (req, res) => {
     try {
+        const id = parseInt(req.params.id)
         const {link} = req.body
         let {image_id} =req.body
         image_id = parseInt(image_id)
         const tutorials = await prisma.tutorials.update({
-            where: {id: parseInt(req.params.id)},
+            where: {id: id},
             data: {
                 image_id: image_id,
                 link: link
             }
         })
         return res.status(200).json({
-            data: tutorials
+            tutorials
         })
     } catch (error) {
         return res.status(500).json({
@@ -79,8 +80,9 @@ const updateTutorial = async (req, res) => {
 
 const deleteTutorial = async (req, res) => {
     try {
+        const id = parseInt(req.params.id)
         const tutorials = await prisma.tutorials.findUnique({
-            where: {id: parseInt(req.params.id)}
+            where: {id: id}
         })
         if(!tutorials){
             return res.status(404).json({
@@ -88,7 +90,7 @@ const deleteTutorial = async (req, res) => {
             })
         }
         await prisma.tutorials.delete({
-            where: {id: parseInt(req.params.id)}
+            where: {id: id}
         })
         return res.status(200).json({
             message: 'Delete data success',
