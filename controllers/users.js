@@ -1,8 +1,22 @@
 const bcrypt = require("bcryptjs");
-const { PrismaClient } = require('@prisma/client')
-const jwt = require('jsonwebtoken')
+const { PrismaClient } = require('@prisma/client');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+const { nanoid } = require('nanoid');
 
 const prisma = new PrismaClient()
+
+const config = {
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+    }
+}
+const transporter = nodemailer.createTransport(config);
 
 // POST request that handles register
 const registerUser = async (req, res) => {
@@ -105,28 +119,69 @@ const putUser = async (req, res) => {
     }
 }
 
-const changePass = async (req, res) => {
+const changePass1 = async (req, res) => {
+    const {email} = req.body;
+    const emailCheck = await prisma.users.findFirst({
+        where: {
+            email: email
+        },
+    });
+    if(!emailCheck){
+        return res.send({message: "Email doesn't exist"})
+    }
+    const token = nanoid(20)
+
+    await prisma.password_resets.create({
+        data: {
+            user_id: emailCheck.id,
+            token: token
+        }
+    })
+    const data = {
+        "from": "z4ed.thalib123@gmail.com",
+        "to": `${email}`,
+        "subject": "Change Password Link",
+        "text": `Please visit this URL: http://localhost:8080/change-password/${token}`,
+    }
+    transporter.sendMail(data, (err, info) => {
+        if(err) {
+            console.log(err);
+        } else {
+            return res.send(info.response);
+        }
+    });
+}
+const changePass2 = async (req, res) => {
     try{
+        const {reset_pwd_token} = req.params;
         const {currentPassword} = req.body;
         let {newPassword} = req.body;
-        const token = req.get("Authorization");
-        const jwt_payload = jwt.verify(token, process.env.SECRET_KEY);
 
-        if(!(currentPassword||newPassword)){
+        const userFromToken = await prisma.password_resets.findFirst({
+            where: {
+                token: reset_pwd_token
+            }
+        })
+
+        if(!userFromToken){
+            return res.status(400).json({ "message": "Your reset password token is invalid"})
+        }
+        
+        if(!(currentPassword&&newPassword)){
             return res.status(400).json({ "message": "All inputs is required"})
         }
 
         const readUser = await prisma.users.findUnique({
             where: {
-                id: jwt_payload.user_id
+                id: userFromToken.user_id
             },
         });
-        console.log(currentPassword, readUser.password)
+
         if((await bcrypt.compare(currentPassword, readUser.password))){
             newPassword = await bcrypt.hash(newPassword, 10)
             const user = await prisma.users.update({
                 where: {
-                    id: jwt_payload.user_id
+                    id: userFromToken.user_id
                 },
                 data: {
                     password: newPassword
@@ -170,7 +225,8 @@ module.exports = {
     registerUser,
     loginUser,
     putUser,
-    changePass,
+    changePass1,
+    changePass2,
     logout,
-    deleteUser
+    deleteUser,
 }
