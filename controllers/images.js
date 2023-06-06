@@ -5,9 +5,7 @@ const prisma = new PrismaClient()
 const getAllImages = async (req, res) => {
     try {
         const images = await prisma.images.findMany();
-        return res.status(200).json({
-            data: images
-        })
+        return res.status(200).json(images)
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
@@ -21,9 +19,7 @@ const getTwoImages = async (req, res) => {
             where: {label: label},
             take: 2
         })
-        return res.status(200).json({
-            data: images
-        })
+        return res.status(200).json(images)
         
     } catch (error) {
         return res.status(500).json({
@@ -34,18 +30,16 @@ const getTwoImages = async (req, res) => {
 
 const getImageById = async (req, res) => {
     try {
-        const {id} = req.params
+        const id = parseInt(req.params.id)
         const images = await prisma.images.findUnique({
-            where: {id: parseInt(id)}
+            where: {id: id}
         })
         if(!images){
             return res.status(404).json({
                 message: 'Data Not Found'
             })
         }
-        return res.status(200).json({
-            data: images
-        })
+        return res.status(200).json(images)
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
@@ -65,9 +59,7 @@ const createImage = async (req, res) => {
                 label: label
             }
         })
-        return res.status(201).json({
-            data: images
-        })
+        return res.status(201).json(images)
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
@@ -77,21 +69,19 @@ const createImage = async (req, res) => {
 
 const updateImage = async (req, res) => {
     try {
-        const {id} = req.params
+        const id = parseInt(req.params.id)
         const {image, label} = req.body
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const images = await prisma.images.update({
-            where: {id: parseInt(id)},
+            where: {id: id},
             data: {
                 user_id: jwt_payload.user_id,
                 label: label,
                 image: image
             }
         })
-        return res.status(200).json({
-            data: images
-        })
+        return res.status(200).json(images)
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
@@ -101,9 +91,9 @@ const updateImage = async (req, res) => {
 
 const deleteImage = async (req, res) => {
     try {
-        const {id} = req.params
+        const id = parseInt(req.params.id)
         const images = await prisma.images.findUnique({
-            where: {id: parseInt(id)}
+            where: {id: id}
         })
         if(!images){
             return res.status(404).json({
@@ -111,13 +101,13 @@ const deleteImage = async (req, res) => {
             })
         }
         await prisma.images.update({
-            where: {id: parseInt(id)},
+            where: {id: id},
             data:{
                 user_id: null
             }
         })
         await prisma.images.delete({
-            where: {id: parseInt(id)}
+            where: {id: id}
         })
         return res.status(200).json({
             message: 'Delete data success',

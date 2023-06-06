@@ -5,9 +5,7 @@ const prisma = new PrismaClient
 const getTestimonials = async (req, res) => {
     try {
         const testimonials = await prisma.testimonials.findMany()
-        return res.status(200).json({
-            data: testimonials
-        })
+        return res.status(200).json(testimonials)
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
@@ -16,18 +14,16 @@ const getTestimonials = async (req, res) => {
 }
 const getById = async (req, res) => {
     try {
-        const {id} = req.params
+        const id = parseInt(req.params.id)
         const testimonials = await prisma.testimonials.findUnique({
-            where: {id: parseInt(id)}
+            where: {id: id}
         })
         if(!testimonials){
             return res.status(404).json({
                 message: 'Data Not Found'
             })
         }
-        return res.status(200).json({
-            data: testimonials
-        })
+        return res.status(200).json(testimonials)
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
@@ -38,8 +34,7 @@ const getById = async (req, res) => {
 const createTestimonial = async (req, res) => {
     try {
         const {testimony} = req.body
-        let {rating} = req.body
-        rating = parseFloat(rating)
+        let {rating} = parseInt(req.body.rating)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const testimonials = await prisma.testimonials.create({
@@ -49,9 +44,7 @@ const createTestimonial = async (req, res) => {
                 rating: rating
             }
         })
-        return res.status(201).json({
-            data: testimonials
-        })
+        return res.status(201).json(testimonials)
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
@@ -61,23 +54,20 @@ const createTestimonial = async (req, res) => {
 
 const updateTestimonial = async (req, res) => {
     try {
-        const {id} = req.params
+        const id = parseInt(req.params.id)
         const {testimony} = req.body
-        let {rating} = req.body
-        rating = parseFloat(rating)
+        let {rating} = parseInt(req.body.rating)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const testimonials = await prisma.testimonials.update({
-            where: {id: parseInt(id)},
+            where: {id: id},
             data: {
                 user_id: jwt_payload.user_id,
                 testimony: testimony,
                 rating: rating
             }
         })
-        return res.status(200).json({
-            data: testimonials
-        })
+        return res.status(200).json(testimonials)
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
@@ -87,9 +77,9 @@ const updateTestimonial = async (req, res) => {
 
 const deleteTestimonial = async (req, res) => {
     try {
-        const {id} = req.params
+        const id = parseInt(req.params.id)
         const testimonials = await prisma.testimonials.findUnique({
-            where: {id: parseInt(id)}
+            where: {id: id}
         })
         if(!testimonials){
             return res.status(404).json({
@@ -97,13 +87,13 @@ const deleteTestimonial = async (req, res) => {
             })
         }
         await prisma.testimonials.update({
-            where: {id: parseInt(id)},
+            where: {id: id},
             data:{
                 user_id: null
             }
         })
         await prisma.testimonials.delete({
-            where: {id: parseInt(id)}
+            where: {id: id}
         })
         return res.status(200).json({
             message: 'Delete data success'
