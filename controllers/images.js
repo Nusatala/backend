@@ -36,7 +36,7 @@ const getImageById = async (req, res) => {
     try {
         const {id} = req.params
         const images = await prisma.images.findUnique({
-            where: {id: Number(id)}
+            where: {id: parseInt(id)}
         })
         if(!images){
             return res.status(404).json({
@@ -82,7 +82,7 @@ const updateImage = async (req, res) => {
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const images = await prisma.images.update({
-            where: {id: Number(id)},
+            where: {id: parseInt(id)},
             data: {
                 user_id: jwt_payload.user_id,
                 label: label,
@@ -103,7 +103,7 @@ const deleteImage = async (req, res) => {
     try {
         const {id} = req.params
         const images = await prisma.images.findUnique({
-            where: {id: Number(id)}
+            where: {id: parseInt(id)}
         })
         if(!images){
             return res.status(404).json({
@@ -111,13 +111,13 @@ const deleteImage = async (req, res) => {
             })
         }
         await prisma.images.update({
-            where: {id: Number(id)},
+            where: {id: parseInt(id)},
             data:{
                 user_id: null
             }
         })
         await prisma.images.delete({
-            where: {id: Number(id)}
+            where: {id: parseInt(id)}
         })
         return res.status(200).json({
             message: 'Delete data success',
