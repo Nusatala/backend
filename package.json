@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev" : "nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -31,6 +31,8 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mysql": "^2.18.1",
-    "mysql2": "^3.3.1"
+    "mysql2": "^3.3.1",
+    "nanoid": "^3.3.4",
+    "nodemailer": "^6.9.3"
   }
 }
