@@ -27,7 +27,7 @@ const getArticleById = async (req, res) => {
     try {
         const {id} = req.params
         const articles = await prisma.articles.findUnique({
-            where: {id: Number(id)},
+            where: {id: parseInt(id)},
         })
         if(!articles){
             return res.status(404).json({
@@ -50,8 +50,8 @@ const getArticleById = async (req, res) => {
 const createArticle = async (req, res) => {
     try {
         const {image_id, tutorial_id, title, asal_daerah, history, bahan_pembuatan, sources} = req.body
-        image_id = Number(image_id)
-        tutorial_id = Number(tutorial_id)
+        image_id = parseInt(image_id)
+        tutorial_id = parseInt(tutorial_id)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const articles = await prisma.articles.create({
@@ -80,12 +80,12 @@ const updateArticle = async (req, res) => {
     try {
         const {id} = req.params
         const {image_id, tutorial_id, title, asal_daerah, history, bahan_pembuatan, sources} = req.body
-        image_id = Number(image_id)
-        tutorial_id = Number(tutorial_id)
+        image_id = parseInt(image_id)
+        tutorial_id = parseInt(tutorial_id)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const articles = await prisma.articles.update({
-            where: {id: Number(id)},
+            where: {id: parseInt(id)},
             data: {
                 user_id: jwt_payload.user_id,
                 image_id: image_id,
@@ -111,7 +111,7 @@ const deleteArticle = async (req, res) => {
     try {
         const {id} = req.params
         const articles = await prisma.articles.findUnique({
-            where: {id: Number(id)}
+            where: {id: parseInt(id)}
         })
 
         if(!articles){
@@ -120,13 +120,13 @@ const deleteArticle = async (req, res) => {
             })
         }
         await prisma.articles.update({
-            where: {id: Number(id)},
+            where: {id: parseInt(id)},
             data: {
                 user_id: null
             }
         })
         await prisma.articles.delete({
-            where:{id: Number(id)}
+            where:{id: parseInt(id)}
         })
         return res.status(200).json({
             message: 'Delete data success'

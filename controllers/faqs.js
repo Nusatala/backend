@@ -41,7 +41,7 @@ const getById = async (req, res) =>{
     try {
         const {id} = req.params
         const faqs = await prisma.faqs.findUnique({
-            where: {id: Number(id)}
+            where: {id: parseInt(id)}
         })
         if(!faqs){
             return res.status(404).json({
@@ -65,7 +65,7 @@ const UpdateFaq = async (req, res) => {
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const faqs = await prisma.faqs.update({
-            where: {id: Number(id)},
+            where: {id: parseInt(id)},
             data: {
                 user_id: jwt_payload.user_id,
                 question: question,
@@ -86,7 +86,7 @@ const deleteFaq = async (req, res) => {
     try {
         const {id} = req.params
         const faqs = await prisma.faqs.findUnique({
-            where:{id: Number(id)}
+            where:{id: parseInt(id)}
         })
         if(!faqs){
             return res.status(404).json({
@@ -94,13 +94,13 @@ const deleteFaq = async (req, res) => {
             })
         }
         await prisma.faqs.update({
-            where: {id: Number(id)},
+            where: {id: parseInt(id)},
             data:{
                 user_id: null
             }
         })
         await prisma.faqs.delete({
-            where: {id: Number(id)}
+            where: {id: parseInt(id)}
         })
         return res.status(200).json({
             message: 'Delete data success'

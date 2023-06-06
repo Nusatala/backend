@@ -18,7 +18,7 @@ const getById = async (req, res) => {
     try {
         const {id} = req.params
         const testimonials = await prisma.testimonials.findUnique({
-            where: {id: Number(id)}
+            where: {id: parseInt(id)}
         })
         if(!testimonials){
             return res.status(404).json({
@@ -39,7 +39,7 @@ const createTestimonial = async (req, res) => {
     try {
         const {testimony} = req.body
         let {rating} = req.body
-        rating = Number(rating)
+        rating = parseFloat(rating)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const testimonials = await prisma.testimonials.create({
@@ -64,11 +64,11 @@ const updateTestimonial = async (req, res) => {
         const {id} = req.params
         const {testimony} = req.body
         let {rating} = req.body
-        rating = Number(rating)
+        rating = parseFloat(rating)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
         const testimonials = await prisma.testimonials.update({
-            where: {id: Number(id)},
+            where: {id: parseInt(id)},
             data: {
                 user_id: jwt_payload.user_id,
                 testimony: testimony,
@@ -89,7 +89,7 @@ const deleteTestimonial = async (req, res) => {
     try {
         const {id} = req.params
         const testimonials = await prisma.testimonials.findUnique({
-            where: {id: Number(id)}
+            where: {id: parseInt(id)}
         })
         if(!testimonials){
             return res.status(404).json({
@@ -97,13 +97,13 @@ const deleteTestimonial = async (req, res) => {
             })
         }
         await prisma.testimonials.update({
-            where: {id: Number(id)},
+            where: {id: parseInt(id)},
             data:{
                 user_id: null
             }
         })
         await prisma.testimonials.delete({
-            where: {id: Number(id)}
+            where: {id: parseInt(id)}
         })
         return res.status(200).json({
             message: 'Delete data success'
