@@ -50,8 +50,9 @@ app.use('/products', productsRoutes)
 app.use(function (req, res, next) {
     return res.status(200).send("Welcome")
     next()
-  })
+})
 
+const URL = process.env.URL;
 const PORT = process.env.PORT;
-app.listen(PORT, console.log('Server has started at: http://localhost:' + PORT));
+app.listen(PORT, console.log('Server has started at: ' + URL));
 

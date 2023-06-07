@@ -36,10 +36,10 @@ model users {
 }
 
 model password_resets {
-  id            Int            @id @default(autoincrement())
+  id            Int          @id @default(autoincrement())
   user_id       Int
   token         String
-  users         users?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "change-pwd_ibfk_1")
+  users         users?       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "change-pwd_ibfk_1")
 }
 model articles {
   id              Int        @id @default(autoincrement())

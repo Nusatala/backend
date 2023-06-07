@@ -120,40 +120,57 @@ const putUser = async (req, res) => {
 }
 
 const changePass1 = async (req, res) => {
-    const {email} = req.body;
-    const emailCheck = await prisma.users.findFirst({
-        where: {
-            email: email
-        },
-    });
-    if(!emailCheck){
-        return res.send({message: "Email doesn't exist"})
-    }
-    const token = nanoid(20)
+    try{
+        const {email} = req.body;
+        const emailCheck = await prisma.users.findFirst({
+            where: {
+                email: email
+            },
+        });
 
-    await prisma.password_resets.create({
-        data: {
-            user_id: emailCheck.id,
-            token: token
+        if(!emailCheck){
+            return res.send({message: "Email doesn't exist"})
         }
-    })
-    const data = {
-        "from": "z4ed.thalib123@gmail.com",
-        "to": `${email}`,
-        "subject": "Change Password Link",
-        "text": `Please visit this URL: http://localhost:8080/change-password/${token}`,
+        const tokenExist = await prisma.password_resets.findFirst({
+            where: {
+                user_id: emailCheck.id
+            }
+        })
+        if(tokenExist){
+            await prisma.password_resets.deleteMany({
+                where: {
+                    user_id: emailCheck.id
+                }
+            })
+        }
+        const token = nanoid(20)
+        
+        await prisma.password_resets.create({
+            data: {
+                user_id: emailCheck.id,
+                token: token
+            }
+        })
+        const data = {
+            "from": `${process.env.EMAIL}`,
+            "to": `${email}`,
+            "subject": "Change Password Link",
+            "text": `Please visit this URL: ${process.env.URL}/users/change-password/${token}`,
+        }
+        transporter.sendMail(data, (err, info) => {
+            if(err) {
+                console.log(err);
+            } else {
+                return res.send(info.response);
+            }
+        });
+    } catch (err) {
+        res.status(500).send({ "error": `${err}` })
     }
-    transporter.sendMail(data, (err, info) => {
-        if(err) {
-            console.log(err);
-        } else {
-            return res.send(info.response);
-        }
-    });
 }
 const changePass2 = async (req, res) => {
     try{
-        const {reset_pwd_token} = req.params;
+        const reset_pwd_token = req.params.token;
         const {currentPassword} = req.body;
         let {newPassword} = req.body;
 
@@ -187,6 +204,11 @@ const changePass2 = async (req, res) => {
                     password: newPassword
                 },
             });
+            await prisma.password_resets.deleteMany({
+                where: {
+                    user_id: userFromToken.user_id
+                }
+            })
             return res.status(200).json(user);
         } else{
             return res.status(403).json({ "message": "Your current password is wrong" });
@@ -228,5 +250,5 @@ module.exports = {
     changePass1,
     changePass2,
     logout,
-    deleteUser,
+    deleteUser
 }

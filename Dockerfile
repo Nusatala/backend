@@ -2,16 +2,16 @@ FROM node
 
 WORKDIR /usr/src/app
 
+ARG EMAIL_PASSWORD
 ARG DATABASE_URL
 ARG SECRET_KEY
-ARG EMAIL_PASSWORD
 
 COPY package*.json ./
 
 RUN npm install
 
 COPY . .
-COPY public_env .env
+COPY public_env ./.env
 
 RUN echo 'EMAIL_PASSWORD="'$EMAIL_PASSWORD'"' >> .env
 RUN echo 'DATABASE_URL="'$DATABASE_URL'"' >> .env
