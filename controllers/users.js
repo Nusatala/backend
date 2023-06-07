@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 const { nanoid } = require('nanoid');
 
 const prisma = new PrismaClient()
-
+const client_secret = process.env.CLIENT_SECRET
 const config = {
     service: "gmail",
     host: "smtp.gmail.com",
@@ -15,7 +15,7 @@ const config = {
         type: "OAuth2",
         user: process.env.EMAIL,
         clientId: "568846596215-h2jkhkva7t1oofnpo8s8gbf9eu4t87r2.apps.googleusercontent.com",
-        clientSecret: process.env.CLIENT_SECRET,
+        clientSecret: client_secret,
         refreshToken: "1//047ICEj25rfkRCgYIARAAGAQSNwF-L9IrMkhs5GUb3aa4vZFj7SG3oCgZHZsIPrp9j2dkct0oiE0V_xrnb0N7p7zoEJx5HZnOE68",
         accessToken: "ya29.a0AWY7Ckk_opuysCKOuAnqj5goNhJsGaLfSl8tBLe4C0e04UDnK1jfULFq0qt_CPgZpwVjzWIz_K1ZZtDmhARLCPejMc73X1Dy7ogVtaEVHxCMdIS2MALCPtstueBWv5Jy0c8VgMDsdu6TAK8u7ilA30GKXfijaCgYKAVoSARISFQG1tDrpjplMi7AGdDQek3OUPC9rvw0163"
     }
