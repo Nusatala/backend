@@ -12,8 +12,12 @@ const config = {
     port: 465,
     secure: true,
     auth: {
+        type: "OAuth2",
         user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
+        clientId: "568846596215-fqvlu2ms9oo2ac6957pa0pklt34e7nsf.apps.googleusercontent.com",
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: "1//047ICEj25rfkRCgYIARAAGAQSNwF-L9IrMkhs5GUb3aa4vZFj7SG3oCgZHZsIPrp9j2dkct0oiE0V_xrnb0N7p7zoEJx5HZnOE68",
+        accessToken: "ya29.a0AWY7Ckk_opuysCKOuAnqj5goNhJsGaLfSl8tBLe4C0e04UDnK1jfULFq0qt_CPgZpwVjzWIz_K1ZZtDmhARLCPejMc73X1Dy7ogVtaEVHxCMdIS2MALCPtstueBWv5Jy0c8VgMDsdu6TAK8u7ilA30GKXfijaCgYKAVoSARISFQG1tDrpjplMi7AGdDQek3OUPC9rvw0163"
     }
 }
 const transporter = nodemailer.createTransport(config);

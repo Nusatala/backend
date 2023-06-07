@@ -2,7 +2,7 @@ FROM node
 
 WORKDIR /usr/src/app
 
-ARG EMAIL_PASSWORD
+ARG CLIENT_SECRET
 ARG DATABASE_URL
 ARG SECRET_KEY
 
@@ -13,7 +13,7 @@ RUN npm install
 COPY . .
 COPY public_env ./.env
 
-RUN echo 'EMAIL_PASSWORD="'$EMAIL_PASSWORD'"' >> .env
+RUN echo 'CLIENT_SECRET="'$CLIENT_SECRET'"' >> .env
 RUN echo 'DATABASE_URL="'$DATABASE_URL'"' >> .env
 RUN echo 'SECRET_KEY="'$SECRET_KEY'"' >> .env
 
