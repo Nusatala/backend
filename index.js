@@ -9,30 +9,13 @@ const imagesRoutes = require('./routes/images')
 const articlesRoutes = require('./routes/articles')
 const quizzesRoutes = require('./routes/quizzes')
 const productsRoutes = require('./routes/products')
+const healthCheckRoutes = require('./routes/healthChecks')
 
 const dotenv = require('dotenv');
 var bodyParser = require('body-parser');
 
 dotenv.config();
 
-// MySQL DB Connection 
-// const mysql = require('mysql')
-// const connection = mysql.createConnection({
-//   host: process.env.MYSQL_HOST,
-//   user: process.env.MYSQL_USER,
-//   password: process.env.MYSQL_PASSWORD,
-//   database: process.env.MYSQL_DB
-// })
-
-// connection.connect()
-
-// connection.query('SHOW TABLES', (err, rows, fields) => {
-//   if (err) throw err
-
-//   console.log('The solution is: ', rows)
-// })
-
-// connection.end()
 
 //BodyParsing
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -47,10 +30,7 @@ app.use('/images', imagesRoutes)
 app.use('/articles', articlesRoutes)
 app.use('/quizzes', quizzesRoutes)
 app.use('/products', productsRoutes)
-app.use(function (req, res, next) {
-    return res.status(200).send("Welcome")
-    next()
-})
+app.use('/health-check', healthCheckRoutes)
 
 const URL = process.env.URL;
 const PORT = process.env.PORT;
