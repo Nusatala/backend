@@ -153,7 +153,7 @@ const changePass1 = async (req, res) => {
             "from": `${process.env.EMAIL}`,
             "to": `${email}`,
             "subject": "Change Password Link",
-            "text": `Please visit this URL: ${process.env.URL}/users/change-password/${token}`,
+            "text": `Please do put request and add your new password using this URL: ${process.env.URL}/users/change-password/${token}`,
         }
         transporter.sendMail(data, (err, info) => {
             if(err) {
@@ -169,8 +169,8 @@ const changePass1 = async (req, res) => {
 const changePass2 = async (req, res) => {
     try{
         const reset_pwd_token = req.params.token;
-        const {currentPassword} = req.body;
         let {newPassword} = req.body;
+        const {repeatNewPassword} = req.body;
 
         const userFromToken = await prisma.password_resets.findFirst({
             where: {
@@ -182,17 +182,11 @@ const changePass2 = async (req, res) => {
             return res.status(400).json({ "message": "Your reset password token is invalid"})
         }
         
-        if(!(currentPassword&&newPassword)){
+        if(!(newPassword&&repeatNewPassword)){
             return res.status(400).json({ "message": "All inputs is required"})
         }
 
-        const readUser = await prisma.users.findUnique({
-            where: {
-                id: userFromToken.user_id
-            },
-        });
-
-        if((await bcrypt.compare(currentPassword, readUser.password))){
+        if(newPassword===repeatNewPassword){
             newPassword = await bcrypt.hash(newPassword, 10)
             const user = await prisma.users.update({
                 where: {
@@ -209,9 +203,8 @@ const changePass2 = async (req, res) => {
             })
             return res.status(200).json(user);
         } else{
-            return res.status(403).json({ "message": "Your current password is wrong" });
+            return res.status(400).json({ "message": "Passwords did'nt match" });
         }
-        
     } catch (err) {
         res.status(500).send({ "error": `${err}` })
     }
