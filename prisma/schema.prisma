@@ -14,7 +14,7 @@ model roles {
 }
 
 model labels {
-  id        Int     @id @default(autoincrement())
+  id        Int         @id @default(autoincrement())
   label     String
   images    images[]
   articles  articles[]
@@ -23,33 +23,34 @@ model labels {
 }
 
 model users {
-  id            Int            @id @default(autoincrement())
-  google_id     String?        @db.VarChar(80)
-  google_secret String?        @db.VarChar(80)
-  username      String         @db.VarChar(80)
-  email         String         @db.VarChar(80)
-  password      String         @db.VarChar(80)
-  name          String         @db.VarChar(80)
-  role_id       Int            @default(2)
-  photo         String?        @db.VarChar(80)
-  created_at    DateTime?      @default(now()) @db.Timestamp(0)
-  updated_at    DateTime?      @default(now()) @db.Timestamp(0)
-  roles         roles          @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
-  password_resets      password_resets[]
-  articles      articles[]
-  faqs          faqs[]
-  images        images[]
-  products      products[]
-  quizzes       quizzes[]
-  testimonials  testimonials[]
+  id              Int               @id @default(autoincrement())
+  google_id       String?           @db.VarChar(80)
+  google_secret   String?           @db.VarChar(80)
+  username        String            @db.VarChar(80)
+  email           String            @db.VarChar(80)
+  password        String            @db.VarChar(80)
+  name            String            @db.VarChar(80)
+  role_id         Int               @default(2)
+  photo           String?           @db.VarChar(80)
+  created_at      DateTime?         @default(now()) @db.Timestamp(0)
+  updated_at      DateTime?         @default(now()) @db.Timestamp(0)
+  roles           roles             @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
+  password_resets password_resets[]
+  articles        articles[]
+  faqs            faqs[]
+  images          images[]
+  products        products[]
+  quizzes         quizzes[]
+  testimonials    testimonials[]
 }
 
 model password_resets {
-  id            Int          @id @default(autoincrement())
-  user_id       Int
-  token         String
-  users         users?       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "change-pwd_ibfk_1")
+  id      Int    @id @default(autoincrement())
+  user_id Int
+  token   String
+  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "change-pwd_ibfk_1")
 }
+
 model articles {
   id              Int        @id @default(autoincrement())
   user_id         Int?
@@ -90,7 +91,6 @@ model images {
   id         Int         @id @default(autoincrement())
   user_id    Int?
   label_id   Int?
-  label      String      @db.VarChar(255)
   image      String      @db.VarChar(255)
   created_at DateTime?   @default(now()) @db.Timestamp(0)
   updated_at DateTime?   @default(now()) @db.Timestamp(0)
@@ -105,8 +105,7 @@ model images {
 model products {
   id          Int      @id @default(autoincrement())
   user_id     Int?
-  label_id     Int?
-  label       String   @db.VarChar(255)
+  label_id    Int?
   name        String   @db.VarChar(255)
   thumbnail   String?  @db.VarChar(255)
   description String?  @db.VarChar(255)
@@ -118,6 +117,7 @@ model products {
   updated_at  DateTime @default(now()) @db.Timestamp(0)
   users       users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "products_ibfk_1")
   labels      labels?  @relation(fields: [label_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "products_ibfk_2")
+
   @@index([user_id], map: "user_id")
 }
 

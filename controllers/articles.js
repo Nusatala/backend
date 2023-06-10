@@ -21,6 +21,22 @@ const getAllArticles = async (req, res) => {
     }
 }
 
+const getArticleByViews = async (req, res) => {
+    try {
+        const articles = await prisma.articles.findMany({
+            orderBy: {
+                views: 'desc'
+            },
+            take: 5
+        })
+        return res.status(200).json(articles)
+    } catch (error) {
+        return res.status(500).json({
+            "error": `${error}`
+        })
+    }
+}
+
 const getArticleById = async (req, res) => {
     try {
         const id = parseInt(req.params.id)
@@ -45,7 +61,7 @@ const getArticleById = async (req, res) => {
 
 const createArticle = async (req, res) => {
     try {
-        const {image_id, tutorial_id, title, asal_daerah, history, bahan_pembuatan, sources} = req.body
+        const {image_id, tutorial_id, label_id, title, asal_daerah, history, bahan_pembuatan, sources} = req.body
         image_id = parseInt(image_id)
         tutorial_id = parseInt(tutorial_id)
         const token = req.get('Authorization')
@@ -55,6 +71,7 @@ const createArticle = async (req, res) => {
                 user_id: jwt_payload.user_id,
                 image_id: image_id,
                 tutorial_id: tutorial_id,
+                label_id: label_id,
                 title: title,
                 asal_daerah: asal_daerah,
                 history: history,
@@ -73,7 +90,7 @@ const createArticle = async (req, res) => {
 const updateArticle = async (req, res) => {
     try {
         const id = parseInt(req.params.id)
-        const {image_id, tutorial_id, title, asal_daerah, history, bahan_pembuatan, sources} = req.body
+        const {image_id, tutorial_id, label_id, title, asal_daerah, history, bahan_pembuatan, sources} = req.body
         image_id = parseInt(image_id)
         tutorial_id = parseInt(tutorial_id)
         const token = req.get('Authorization')
@@ -84,6 +101,7 @@ const updateArticle = async (req, res) => {
                 user_id: jwt_payload.user_id,
                 image_id: image_id,
                 tutorial_id: tutorial_id,
+                label_id: label_id,
                 title: title,
                 asal_daerah: asal_daerah,
                 history: history,
@@ -132,6 +150,7 @@ const deleteArticle = async (req, res) => {
 
 module.exports = {
     getAllArticles,
+    getArticleByViews,
     getArticleById,
     createArticle,
     updateArticle,
