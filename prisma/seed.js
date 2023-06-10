@@ -30,49 +30,85 @@ async function main() {
                 photo: 'photo',
         }
     })
-    // Tutorials Data
-    // await prisma.images.create({
-    //     data:
-    //         {
-    //             id: 1,
-    //             user_id: 1,
-    //             label: 'Bonang',
-    //             image: 'inilinkimage',
-    //         },
-        
-    // })
-    // await prisma.tutorials.createMany({
-    //     data: [
-    //         {
-    //             image_id: 1, //Data Bonang sementara
-    //             link: 'https://www.youtube.com/watch?v=NrKvjxJsgQ0',
-    //         },
-    //         {
-    //             image_id: 1, //Data Rebab sementara
-    //             link: 'https://www.youtube.com/watch?v=dpbgoRcnugk',
-    //         },
-    //         {
-    //             image_id: 1, //Data Saluang sementara
-    //             link: 'https://www.youtube.com/watch?v=J2ICd7OeGAM',
-    //         },
-    //         {
-    //             image_id: 1, //Data Sasando sementara
-    //             link: 'https://www.youtube.com/watch?v=qqSAS_Moa6M',
-    //         },
-    //         {
-    //             image_id: 1, //Data Sape sementara
-    //             link: 'https://www.youtube.com/watch?v=rr_P6UPC1es',
-    //         },
-    //         {
-    //             image_id: 1, //Data Kolintang sementara
-    //             link: 'https://www.youtube.com/watch?v=BMV_TDrBCl8',
-    //         },
-    //         {
-    //             image_id: 1, //Data Tifa sementara
-    //             link: 'https://www.youtube.com/watch?v=MqPKmisiicg',
-    //         },
-    //     ]
-    // })
+    // Images Data
+    await prisma.images.createMany({
+        data:[
+            {
+                id: 1,
+                user_id: 1,
+                label: 'Bonang',
+                image: 'https://storage.cloud.google.com/nusatala-images/scans/bonang.jpg',
+            },
+            {
+                id: 2,
+                user_id: 1,
+                label: 'Rebab',
+                image: 'https://storage.cloud.google.com/nusatala-images/scans/rebab.jpg',
+            },
+            {
+                id: 3,
+                user_id: 1,
+                label: 'Saluang',
+                image: 'https://storage.cloud.google.com/nusatala-images/scans/saluang.jpg',
+            },
+            {
+                id: 4,
+                user_id: 1,
+                label: 'Sasando',
+                image: 'https://storage.cloud.google.com/nusatala-images/scans/sasando.jpg',
+            },
+            {
+                id: 5,
+                user_id: 1,
+                label: 'Sape',
+                image: 'https://storage.cloud.google.com/nusatala-images/scans/sape.jpeg',
+            },
+            {
+                id: 6,
+                user_id: 1,
+                label: 'Kolintang',
+                image: 'https://storage.cloud.google.com/nusatala-images/scans/kolintang.jpg',
+            },
+            {
+                id: 7,
+                user_id: 1,
+                label: 'Tifa',
+                image: 'https://storage.cloud.google.com/nusatala-images/scans/tifa.jpg',
+            },
+        ]
+    })
+    await prisma.tutorials.createMany({
+        data: [
+            {
+                image_id: 1, //Data Bonang sementara
+                link: 'https://www.youtube.com/watch?v=NrKvjxJsgQ0',
+            },
+            {
+                image_id: 2, //Data Rebab sementara
+                link: 'https://www.youtube.com/watch?v=dpbgoRcnugk',
+            },
+            {
+                image_id: 3, //Data Saluang sementara
+                link: 'https://www.youtube.com/watch?v=J2ICd7OeGAM',
+            },
+            {
+                image_id: 4, //Data Sasando sementara
+                link: 'https://www.youtube.com/watch?v=qqSAS_Moa6M',
+            },
+            {
+                image_id: 5, //Data Sape sementara
+                link: 'https://www.youtube.com/watch?v=rr_P6UPC1es',
+            },
+            {
+                image_id: 6, //Data Kolintang sementara
+                link: 'https://www.youtube.com/watch?v=BMV_TDrBCl8',
+            },
+            {
+                image_id: 7, //Data Tifa sementara
+                link: 'https://www.youtube.com/watch?v=MqPKmisiicg',
+            },
+        ]
+    })
     // //Articles Data
     // await prisma.articles.createMany({
     //     data: [
