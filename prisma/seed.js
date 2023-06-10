@@ -20,14 +20,45 @@ async function main() {
             ]
         });
     };
+    // Labels data
+    await prisma.labels.createMany({
+        data:[
+            {
+                id: 1,
+                label: 'Bonang'
+            },
+            {
+                id: 2,
+                label: 'Rebab'
+            },
+            {
+                id: 3,
+                label: 'Saluang'
+            },
+            {
+                id: 4,
+                label: 'Sasando'
+            },
+            {
+                id: 5,
+                label: 'Sape'
+            },
+            {
+                id: 6,
+                label: 'Kolintang'
+            },
+        ]
+    })
+
+
     await prisma.users.create({
         data:{
-                name: 'Admin',
-                email: 'admin1@gmail.com',
-                username: 'admin1',
-                password: '$2a$12$0vvzXKgpFoY2qRmOuMzNIetRNLalszVfLTUH/aosHvyplaCbv/p3i',
-                role_id: 1,
-                photo: 'photo',
+            name: 'Admin',
+            email: 'admin1@gmail.com',
+            username: 'admin1',
+            password: '$2a$12$0vvzXKgpFoY2qRmOuMzNIetRNLalszVfLTUH/aosHvyplaCbv/p3i',
+            role_id: 1,
+            photo: 'photo',
         }
     })
     // Images Data

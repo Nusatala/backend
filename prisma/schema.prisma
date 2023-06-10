@@ -13,6 +13,15 @@ model roles {
   users users[]
 }
 
+model labels {
+  id        Int     @id @default(autoincrement())
+  label     String
+  images    images[]
+  articles  articles[]
+  tutorials tutorials[]
+  products  products[]
+}
+
 model users {
   id            Int            @id @default(autoincrement())
   google_id     String?        @db.VarChar(80)
@@ -44,6 +53,7 @@ model password_resets {
 model articles {
   id              Int        @id @default(autoincrement())
   user_id         Int?
+  label_id        Int?
   image_id        Int
   tutorial_id     Int?
   title           String     @db.VarChar(255)
@@ -57,6 +67,7 @@ model articles {
   users           users?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_1")
   images          images     @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_2")
   tutorials       tutorials? @relation(fields: [tutorial_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_3")
+  labels          labels?    @relation(fields: [label_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "articles_ibfk_4")
 
   @@index([image_id], map: "image_id")
   @@index([tutorial_id], map: "tutorial_id")
@@ -78,12 +89,14 @@ model faqs {
 model images {
   id         Int         @id @default(autoincrement())
   user_id    Int?
+  label_id   Int?
   label      String      @db.VarChar(255)
   image      String      @db.VarChar(255)
   created_at DateTime?   @default(now()) @db.Timestamp(0)
   updated_at DateTime?   @default(now()) @db.Timestamp(0)
   articles   articles[]
   users      users?      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "images_ibfk_1")
+  labels     labels?     @relation(fields: [label_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "images_ibfk_2")
   tutorials  tutorials[]
 
   @@index([user_id], map: "user_id")
@@ -92,6 +105,7 @@ model images {
 model products {
   id          Int      @id @default(autoincrement())
   user_id     Int?
+  label_id     Int?
   label       String   @db.VarChar(255)
   name        String   @db.VarChar(255)
   thumbnail   String?  @db.VarChar(255)
@@ -103,7 +117,7 @@ model products {
   created_at  DateTime @default(now()) @db.Timestamp(0)
   updated_at  DateTime @default(now()) @db.Timestamp(0)
   users       users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "products_ibfk_1")
-
+  labels      labels?  @relation(fields: [label_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "products_ibfk_2")
   @@index([user_id], map: "user_id")
 }
 
@@ -155,11 +169,13 @@ model testimonials {
 model tutorials {
   id         Int        @id @default(autoincrement())
   image_id   Int
+  label_id   Int?
   link       String     @db.VarChar(255)
   created_at DateTime?  @default(now()) @db.Timestamp(0)
   updated_at DateTime?  @default(now()) @db.Timestamp(0)
   articles   articles[]
   images     images     @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tutorials_ibfk_1")
+  labels     labels?    @relation(fields: [label_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tutorials_ibfk_2")
 
   @@index([image_id], map: "image_id")
 }
