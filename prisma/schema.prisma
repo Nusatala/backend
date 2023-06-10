@@ -110,7 +110,6 @@ model products {
   thumbnail   String?  @db.VarChar(255)
   description String?  @db.VarChar(255)
   price       Decimal  @db.Decimal(11, 2)
-  stock       Int
   link        String?  @db.VarChar(255)
   rating      Float?   @db.Float
   created_at  DateTime @default(now()) @db.Timestamp(0)

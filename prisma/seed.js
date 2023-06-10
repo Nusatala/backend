@@ -253,7 +253,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 2 kg\nKategori: Gong\nEtalase: gong\nsatu pcs bonang bahan besi full dikasih pukulan\ndiameter -+ 25cm tinggi -+10cm\nvarian\n*Bonang tanpa pukulan\n*Bonang plus pukulan',
                 price: 275000,
                 link: 'https://www.tokopedia.com/cahayaabadimusik/bonang-talempong-gong-besi-full-tanpa-pukulan?extParam=ivf%3Dfalse%26src%3Dsearch',
-                stock: 0,
                 rating: 5
             },
             {
@@ -265,7 +264,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 3 kg\nKategori: Mainan Kuda\nEtalase: Gamelan\nBahan besi\nFinising Cat Duko\nPlus pemukul 2 buah\nIsi 3 bonang\nTanpa dudukan\nPakai alas dus atau kertas tebal / karpet bila tidak pakai dudukan',
                 price: 600000,
                 link: 'https://www.tokopedia.com/giripurwaseni/bonang-kenong-kuda-lumping-jaranan-bahan-besi-isi-3?extParam=ivf%3Dfalse%26src%3Dsearch',
-                stock: 0,
                 rating: 5
             },
             {
@@ -277,7 +275,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 7 kg\nKategori: Aksesoris Alat Musik Gesek\nEtalase: REBAB\nRebab adalah salah satu alat musik tradiosional jawa, biasanya di mainkan bersama gamelan jawa.\nbahan kayu sawo.\n\nBeli produk ini langsung dari toko online Raff Collection Semarang saja yuk.\nToko online Raff Collection jual produk kerajinan gamelan, lebih murah dan terjamin kualitasnya\n\nIsi dalam paket:\n1 rebab bahan kayu sawo\n1 senggreng\n1 srenten\n1 gondorukem\n2 senar (untuk cadangan)\n\nBelum termasuk kotaknya (kotak hanya sebagai ilustrasi saja).\nJika menginginkan dengan kotaknya ada di etalase beda lagi.\n\nPerhitungan ongkir berdasarkan volume ya bukan berat produk.\n\nFoto adalah real pict yang kami punya.\n\nProduk ini asli hand made, bukan pabrikasi.\nReadi stok di toko online Raff Collection Semarang.\n\nSilahkan langsung diorder aja.',
                 price: 550000,
                 link: 'https://www.tokopedia.com/raff-collection/rebab-sawo-gamelan-jawa?extParam=ivf%3Dfalse%26src%3Dsearch&refined=true',
-                stock: 0,
                 rating: 5
             },
             {
@@ -289,7 +286,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 2 kg\nKategori: Gamelan\nEtalase: Gamelan\n\nDeskripsi Rebab Sawo gamelan Jawa\nRebab adalah salah satu alat musik tradiosional jawa , biasanya di mainkan bersama gamelan jawa.\n\nharga ini hanyalah harga rebabnya saja tanpa kotak&plangkan(tempat dudukan)\n\nhubungi WA: 083866471799 jika datang ke toko (harga lebih murah)',
                 price: 450000,
                 link: 'https://www.tokopedia.com/airwinshop/rebab-gamelan-jawa-kayu-sawo?extParam=ivf%3Dfalse%26src%3Dsearch&refined=true',
-                stock: 0,
                 rating: 5
             },
             {
@@ -301,7 +297,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 7 kg\nKategori: Lainnya\nEtalase: ALAT MUSIK\n\nHanya di toko kami anda bisa menemukan Produk dengan kualitas TERBAIK...!!!\nRebab gamelan jawa bahan dari kayu sonokeling\n\nharga untuk satu rebab kayu sonokeling\n\nuntuk kain / dodotnya warna random tergantung stock yang ada\n\nBonus :\n1 kosok / senggreng\n2 senar cadangan\n1 batu kosok / gondorukem\n1 srentem\n\nSelamat berbelanja, stok selalu Ready. silahkan lgs di order gan/sis.\nJam Operasional: 08.00-17.00 WIB\nSKU : 3131/1075827616024018944/55',
                 price: 645000,
                 link: 'https://www.tokopedia.com/maliko-1/rebab-gamelan-jawa-kayu-sonokeling-murah?extParam=ivf%3Dfalse%26src%3Dsearch&refined=true',
-                stock: 0,
                 rating: 5
             },
             {
@@ -313,7 +308,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 7 kg\nKategori: Gamelan\nEtalase: Rebab\n\nRebab Jawa bahan dari kayu Sawo\n\nBeli produk ini langsung dari toko online Raff Collection Semarang saja yuk.\nToko online Raff Collection jual produk kerajinan gamelan, lebih murah dan terjamin kualitasnya\n\nHarga di atas untuk satu set rebab dan kotaknya.\nisi paket:\n- Rebab Sawo\n- kosok rebab\n- srenten\n- gondorukem\n- senar rebab ( untuk cadangan )\n- kotak rebab\n\nFoto diatas adalah real pict stock yang kami punya.\n\nRebab ini asli hand made punya kita, bukan dari pembuatan pabrikasi.\n\nReadi stok di toko online Raff Collection Semarang',
                 price: 690000,
                 link: 'https://www.tokopedia.com/raff-collection/rebab-kayu-sawo-dan-kotak?extParam=ivf%3Dfalse%26src%3Dsearch&refined=true',
-                stock: 0,
                 rating: 4.5
             },
             {
@@ -325,7 +319,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 250 g\nKategori: Alat Musik\nEtalase: Saluang\nSaluang Minangkabau, untuk profesional dengan nada presisi, bukan souvenir!! Tersedia nada dasar C, C#, dan Bb',
                 price: 260000,
                 link: 'https://www.tokopedia.com/tukangtukangan/saluang-minangkabau-alat-musik-minang-padang-sumatera-barat?extParam=ivf%3Dfalse%26src%3Dsearch',
-                stock: 0,
                 rating: 5
             },
             {
@@ -337,7 +330,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 750 g\nKategori: Aksesoris Alat Musik Tiup\nEtalase: Semua Etalase\n\nSelamat datang di toko kami :)\n\nFlute bambu diagonal. Cara meniupnya secara diagonal.\nNama tradisionalnya Saluang.\nBiasa dipakai dalam acara adat Minang sambil fiiringi nyanyian puji2an.\n\nSelama iklan masih ada 99% produk ready stok dan BER-GARANSI\nselamat berbelanja and happy shopping!!!',
                 price: 223000,
                 link: 'https://www.tokopedia.com/muhammadrazi-1/saluang-minang-diagonal-flute-traditional-minang-indonesia-populer?extParam=ivf%3Dfalse%26src%3Dsearch',
-                stock: 0,
                 rating: 0
             },
             {
@@ -349,7 +341,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 750 g\nKategori: Buku Kedokteran Spesialis\nEtalase: Semua Etalase\n\nNada : C\nPanjang : 60 cm\nDiameter : 3 cm\n\nKonfirmasi dulu untuk nada yg dibutuhkan\n\nSaluang merupakan alat musik tradisional Minangkabau, yg terbuat dari bambu tipis atau bambu talang. dengan 4 lubang nada. saluang ini termasuk jenis alat musik aerophon. yang dihiasi dengan ukiran khas Minangkabau menggunakan alat ukir dengan pemanas khusus.',
                 price: 159000,
                 link: 'https://www.tokopedia.com/cakra-marketshop/saluang-darek-alat-musik-tradisional-minangkabau?extParam=ivf%3Dfalse%26src%3Dsearch',
-                stock: 0,
                 rating: 0
             },
             {
@@ -361,7 +352,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 450 g\nKategori: Biola\nEtalase: Ukiran Kayu\n\nSelamat Datang di Toko Kami\nHappy Shoping\n\nSebagian besar barang di toko kami ready stock, jangan ragu untuk checkout ya kak\n\nBIASAKAN MEMBACA DULU\n\nSALUANG minang Polos tanpa ukiran\nBernada dasar C=DO\n(Ukiran hanya bisa request nama)\n\nBahan dari bambu pilihan, di stem menggunakan piano, di ukir menggunakan alat ukir bakar bukan dari spidol. Kualitas boleh di uji.\n\nUkuran panjang +- 57cm\nDiamete +- 2.5 cm\n\nMempunyai 4 lobang tangga nada\nNada dasar C=DO\nJenis nada, DIATONIS (ber-urutan)\nUrutan Nada :\nC-D-E-F-G = DO-RE-MI-FA-SOL\n\nBagi pemula : Untuk tutorial cara memainkannya, bisa di cek di youtube dengan kata kunci "Tutorial Saluang Minang". Sudah banyak di bikin video nya oleh para konten kreator\n\nNote:\nUntuk ukurannya tidak bisa di pastikan, hanya bisa menulis dengan ukuran kira². Karna ini termasuk kerajinan tangan & bahannya pun dari alam, bukan mesin yang bekerja.',
                 price: 181000,
                 link: 'https://www.tokopedia.com/aestheticrooms/saluang-minang-polos-tanpa-ukiran-salingkuangcraft-limited-stock?extParam=ivf%3Dfalse%26src%3Dsearch',
-                stock: 0,
                 rating: 0
             },
             {
@@ -373,7 +363,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 11 kg\nWaktu Preorder: 14 Hari\nKategori: Sasando\nEtalase: Sasando\nSetiap Sasando selalu dibuat baru dan proses pembuatan 3-5 hari untuk 1 sasando. Motif bisa dipilih.\nDijual Sasando 24 Senar (Non Elektrik) Rp 1.250.000,- (Pembelian lebih dari 1 mendapatkan harga spesial). Ukuran sama dengan 32 senar ukuran 3/4. Lebih kecil dari Sasando Elektrik atau Akustik 45 Senar ke atas. Detail SASANDO Handmade. Bisa dibuka tutup dan gampang dibawa kemana saja. Sasando di atas merupakan Sasando Biola yang bisa dimainkan oleh pemula. Kami sudah melayani pembelian ke berbagai daerah di Indonesia juga luar negeri. Kami juga menerima tawaran untuk performance Sasando solo maupun grup di nasional maupun internasional.\nPerhitungan berat produk dengan ukuran besar di dasarkan pada perhitungan volume 90x50x30cm digunakan rumus berat volume pada TIKI/JNE = (PxLxT)/6000.\nOngkir sudah termasuk pengiriman dengan packing kayu dan sangat aman sampai tujuan.',
                 price: 1250000,
                 link: 'https://www.tokopedia.com/sasando/alat-musik-sasando-24-senar-non-elektrik-termurah?extParam=ivf%3Dfalse%26src%3Dsearch',
-                stock: 0,
                 rating: 5
             },
             {
@@ -385,7 +374,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 18 kg\nWaktu Preorder: 14 Hari\nKategori: Sasando\nEtalase: Sasando\nPENTING UNTUK DIBACA!\n\nDengan bangga mempersembahkan untuk Anda, desain baru Sasando 54 senar kami dengan stand dan hardcase. Jembatan (penahan senar) yang bisa dipindahkan dan senar warna-warni yang bisa digunakan untuk penghafalan chord, sehingga akan lebih mudah dipelajari.\nDesain dan warna sasando juga bisa di customsesuai dengan keinginan anda. Semua sasando akan dibuat baru untuk pelanggan dan membutuhkan waktu sekitar 7-14 hari. Kalian akan mendapatkan sasando terbaik dan baru dari kami. Jadi tunggu apa lagi. Ayo pesan !!!',
                 price: 7000000,
                 link: 'https://www.tokopedia.com/sasando/alat-musik-sasando-elektrik-54-senar-dengan-stand-hardcase-terbaik?extParam=ivf%3Dfalse%26src%3Dsearch',
-                stock: 0,
                 rating: 5
             },
             {
@@ -397,7 +385,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 6 kg\nKategori: Alat Musik\nEtalase: Gitar\nGuitar Sape Alat Musik Dayak Kalimantan.\nAdalah alat musik khas Kalimantan.\nDimainkan dengan cara dipetik seperti gitar.\nSudah dilengkapi dengan preamp Aktif. Tinggal colok ke mixer/sound.\nSuaranya sangat khas.\nMaterial Kayu Kalampan (Kayu asli Kalimantan)\How to tuning??\nString 1-C4\nString 2-C4\nString 3-G3\nString 4-E3\nString 5-C3\nString 6-D3 (paling atas)\n\nDimensi:\nP x L x T= 110cm x 18cm x 10cm.\nDimensi packing: 120x20x12cm\n\nMotif di kirim random.',
                 price: 1347000,
                 link: 'https://www.tokopedia.com/dmay7musicshop/guitar-sape-sape-alat-musik-dayak-alat-musik-tradisional?extParam=ivf%3Dfalse%26src%3Dsearch',
-                stock: 0,
                 rating: 5
             },
             {
@@ -409,7 +396,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 3 kg\nKategori: Alat Musik\nEtalase: Alat Musik\nSape 6 Senar\n\nPanjang 100 cm\nLebar 20 cm\nKetebalan body 5 cm\n\nORIGINAL!!! Preamp Equalizer Tuner Cowboy AW-6\n\nMotif timbul (Ukir)\n\nWarna marlon kombinasi hitam\nDreyr grover : 3 L dan 3 R\nWarna hitam\n\npenahan senar dari tembagaNut kayu ulin, bridg kayu ulin\nSaadle dari tembaga\nUkuran senar 0,13\nrets bambu gare(lokal)',
                 price: 1950000,
                 link: 'https://www.tokopedia.com/and2pedia/sapek-sape-sape-alat-musik-tradisioanl-dayak?extParam=ivf%3Dfalse%26src%3Dsearch',
-                stock: 0,
                 rating: 3
             },
             {
@@ -421,7 +407,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 1 kg\nKategori: Lainnya\nEtalase: Semua Etalase\nCALUNG KOLINTANG BAMBU alat musik tradisional 1 oktaf 8 nada(DO-RE-MI-FA-SOL-LA-SI-DO) cara memainkan dipukul dengan alat yang sudah disediakan, cocok untuk pemula yang hobi bermain musik.\nKolintang atau kulintang adalah alat musik yang terdiri dari barisan bambu yang diletakkan mendatar.\nBahan : Bambu khusus untuk angklung yang sudah diproses tahan hama\n\nUkuran :\nTinggi dudukan 5 cm, panjang 40 cm, lebar 35 cm\nPanjang bambu nada DO - 35 cm, RE - 33 cm, MI - 32 cm, FA - 30 cm, SOL - 28 cm, LA - 26 cm, SI - 24 cm, DO - 22 cm.\nTidak bergaransi',
                 price: 117000,
                 link: 'https://www.tokopedia.com/darasco/gambang-kolintang-bambu-1-oktaf-8-nada-alat-musik-tradisional-ukuran?extParam=ivf%3Dfalse%26src%3Dsearch',
-                stock: 0,
                 rating: 4.8
             },
             {
@@ -433,7 +418,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 900 g\nKategori: Alat Musik\nEtalase: Perkusi\n\nTifa Kecil.\nBisa dipake untuk menari.\nTinggi 30cm\nDiameter 5 inch\n\nMaterial solid wood mahogany.\nMembran kulit kambing.',
                 price: 79700,
                 link: 'https://www.tokopedia.com/jazziepro1985/tifa-anak-alat-musik-papua-hitam?extParam=ivf%3Dfalse&src=topads',
-                stock: 0,
                 rating: 4.9
             },
             {
@@ -445,7 +429,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 1,8 kg\nKategori: Drum Elektrik\nEtalase: Semua Etalase\n\nAV(AILABLE)\n\nmainan anak alat musik tifa Papua jimbe rembana hadroh\n\n((NOTE:UNTUK WARNA ATAU SIZE MOHON DITULIS DI KOLOUM KETERANGAN ORDER))',
                 price: 56000,
                 link: 'https://www.tokopedia.com/anidea54/0-0-mainan-anak-alat-musik-tifa-papua-jimbe-rembana-hadroh-30cm?extParam=ivf%3Dfalse%26src%3Dsearch&refined=true',
-                stock: 0,
                 rating: 5
             },
             {
@@ -457,7 +440,6 @@ async function main() {
                 description: 'Kondisi: Baru\nBerat Satuan: 1 kg\nKategori: Gendang\nEtalase: Semua Etalase\n\nAlat Musik TIFA PAPUA\n\ndari bahan Kayu tebal dan kuat, dengan ukiran dan tulisan Papua.\n\nSelain jadi alat musik, Tifa ini bisa dijadikan pajangan di rumah.\nRumah jadi terlihat indah dengan nuansa etnik.\n\nReady 2 warna : Black, Brown\nReady 5 ukuran : Size A, B, C, D, E\n\nSize C : T-25, D-12',
                 price: 230000,
                 link: 'https://www.tokopedia.com/clickpapua/alat-musik-tradisional-tifa-papua-size-e?extParam=ivf%3Dfalse%26src%3Dsearch&refined=true',
-                stock: 0,
                 rating: 5
             },
         ]
