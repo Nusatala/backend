@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport(config);
 // POST request that handles register
 const registerUser = async (req, res) => {
     try{
-        const {name, username, email, password, photo} = req.body
+        const {name, username, email, password} = req.body
         
         // Validate if email/username exist in our database
         const emailCheck = await prisma.users.findFirst({
@@ -47,7 +47,6 @@ const registerUser = async (req, res) => {
                     username: username,
                     password: hashedPassword,
                     role_id: 2,
-                    photo: photo
                 },
             });
         
