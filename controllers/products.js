@@ -44,6 +44,20 @@ const getAllProducts = async (req, res) => {
     }
 };
 
+const getAllProductsByLabel = async (req, res) => {
+    try{
+        const label_id = parseInt(req.params.id)
+        const products = await prisma.products.findMany({
+            where:{
+                label_id: label_id
+            }
+        });
+        return res.status(200).json(products);
+    }catch (err) {
+        return res.status(500).send({ "error": `${err}` });
+    }
+};
+
 const getProductById = async (req, res) => {
     try{
         const products = await prisma.products.findUnique({
@@ -128,6 +142,7 @@ const deleteProducts = async (req, res) => {
 module.exports = {
     postProducts,
     getAllProducts,
+    getAllProductsByLabel,
     getProductById,
     putProducts,
     deleteProducts

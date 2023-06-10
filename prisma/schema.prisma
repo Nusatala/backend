@@ -8,7 +8,7 @@ datasource db {
 }
 
 model roles {
-  id    Int     @id @default(autoincrement())
+  id    Int       @id @default(autoincrement())
   name  String?
   users users[]
 }
