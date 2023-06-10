@@ -14,9 +14,9 @@ const getAllImages = async (req, res) => {
 }
 const getTwoImages = async (req, res) => {
     try {
-        const {label} = req.params
+        const label_id = parseInt(req.params.label_id)
         const images = await prisma.images.findMany({
-            where: {label: label},
+            where: {label_id: label_id},
             take: 2
         })
         return res.status(200).json(images)

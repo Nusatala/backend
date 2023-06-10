@@ -30,6 +30,23 @@ const getTutorialById = async (req, res) => {
     }
 }
 
+const getTutorialByLabel = async (req, res) => {
+    try {
+        const label_id = parseInt(req.params.label_id)
+        const tutorials = await prisma.tutorials.findUnique({
+            where: {label_id: label_id}
+        })
+        if(!tutorials){
+            return res.status(404).json({message: 'Data Not Found'})
+        }
+        return res.status(200).json(tutorials)
+    } catch (error) {
+        return res.status(500).json({
+            "error": `${error}`
+        })
+    }
+}
+
 const createTutorial = async (req, res) => {
     try {
         const {link} = req.body
@@ -99,6 +116,7 @@ const deleteTutorial = async (req, res) => {
 module.exports = {
     getAllTutorials,
     getTutorialById,
+    getTutorialByLabel,
     createTutorial,
     updateTutorial,
     deleteTutorial
