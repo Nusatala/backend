@@ -97,7 +97,6 @@ model images {
   articles   articles[]
   users      users?      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "images_ibfk_1")
   labels     labels?     @relation(fields: [label_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "images_ibfk_2")
-  tutorials  tutorials[]
 
   @@index([user_id], map: "user_id")
 }
@@ -167,14 +166,12 @@ model testimonials {
 
 model tutorials {
   id         Int        @id @default(autoincrement())
-  image_id   Int
   label_id   Int?
   link       String     @db.VarChar(255)
   created_at DateTime?  @default(now()) @db.Timestamp(0)
   updated_at DateTime?  @default(now()) @db.Timestamp(0)
   articles   articles[]
-  images     images     @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tutorials_ibfk_1")
   labels     labels?    @relation(fields: [label_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tutorials_ibfk_2")
 
-  @@index([image_id], map: "image_id")
+  @@index([label_id], map: "label_id")
 }
