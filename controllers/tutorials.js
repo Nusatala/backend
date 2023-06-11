@@ -1,5 +1,4 @@
 const {PrismaClient} = require('@prisma/client')
-
 const prisma = new PrismaClient();
 
 const getAllTutorials = async (req, res) => {
@@ -50,11 +49,9 @@ const getTutorialByLabel = async (req, res) => {
 const createTutorial = async (req, res) => {
     try {
         const {link} = req.body
-        let {image_id} = parseInt(req.body.image_id)
         let {label_id} = parseInt(req.body.label_id)
         const tutorials = await prisma.tutorials.create({
             data: {
-                image_id: image_id,
                 label_id: label_id,
                 link: link
             }
@@ -71,12 +68,10 @@ const updateTutorial = async (req, res) => {
     try {
         const id = parseInt(req.params.id)
         const {link} = req.body
-        let {image_id} = parseInt(req.body.image_id)
         let {label_id} = parseInt(req.body.label_id)
         const tutorials = await prisma.tutorials.update({
             where: {id: id},
             data: {
-                image_id: image_id,
                 label_id: label_id,
                 link: link
             }
