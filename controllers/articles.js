@@ -92,25 +92,19 @@ const getArticleById = async (req, res) => {
         const articles = await prisma.articles.findUnique({
             where: {id: id},
         })
-        const articlesData = await Promise.all(articles.map(async article => {
-            const image = await prisma.images.findUnique({
-                where: {
-                    id: article.image_id
-                }
-            })
-            return {
-                ...article,
-                image: image
-            }
-        }))
         if(!articles){
             return res.status(404).json({
                 message: 'Data Not Found'
             })
         }
-        if(articles){
-            await counterViews(articles.id)
+        const image = await prisma.images.findUnique({
+            where: {id: articles.image_id}
+        })
+        const articlesData = {
+            ...articles,
+            image: image
         }
+        await counterViews(articles.id)
         return res.status(200).json(articlesData)
     } catch (error) {
         return res.status(500).json({
