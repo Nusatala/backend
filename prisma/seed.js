@@ -443,6 +443,52 @@ async function main() {
             },
         ]
     })
+    //Testimonials Data
+    await prisma.testimonials.createMany({
+        data: [
+            {
+                id: 1,
+                user_id: 3,
+                testimony: 'Aplikasi sangat membantu saya dalam mengenali alat musik tradisional yang sebelumnya tidak saya ketahui.',
+                rating: 5
+            },
+            {
+                id: 2,
+                user_id: 4,
+                testimony: 'Aplikasi ini membantu saya mengenal dan mempelajari alat musik tradisional Indonesia dengan fitur pengenalan gambar yang cerdas.',
+                rating: 5
+            },
+            {
+                id: 2,
+                user_id: 5,
+                testimony: 'Saya suka bagaimana aplikasi ini menggunakan teknologi pengenalan gambar untuk memberikan informasi yang akurat tentang alat musik tradisional yang saya ambil gambarnya',
+                rating: 5
+            }
+        ]
+    })
+    //FAQs Data
+    await prisma.faqs.createMany({
+        data: [
+            {
+                id: 1,
+                user_id: 1,
+                question: 'Apa itu Nusatala?',
+                answer: 'Nusatala adalah sebuah aplikasi yang dapat mendeteksi gambar alat musik tradisional menggunakan teknologi image recognition.'
+            },
+            {
+                id: 2,
+                user_id: 1,
+                question: 'Bagaimana cara menggunakan Nusatala?',
+                answer: 'Unduh dan instal aplikasi Nusatala, lalu buka aplikasi tersebut. Ambil gambar alat musik tradisional Indonesia, dan aplikasi akan memberikan informasi terkait alat musik tersebut.'
+            },
+            {
+                id: 3,
+                user_id: 1,
+                question: 'Apakah Aplikasi Nusatala mencakup semua alat musik tradisional Indonesia?',
+                answer: 'Untuk saat ini, Nusatala hanya dapat mengenali beberapa alat musik tradisional saja. Tim pengembang terus berupaya untuk memperluas database alat musik tradisional yang terdaftar dalam aplikasi agar mencakup lebih banyak jenis alat musik di masa mendatang.'
+            },
+        ]
+    })
 }
 main()
     .then(async () => {
