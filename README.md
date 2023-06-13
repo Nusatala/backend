@@ -6,11 +6,18 @@
     ```
     npm install
     ```
-4. To run this project, type:
+4. Create google cloud service account and add cloud storage admin role
+5. Generate json key file from that account
+6. Put the json key file to this project and rename it to "service-key.json"
+7. To run this project, type:
     ```
     npm start
     ```
-5. Run a migration
+8. Run a migration
     ```
     npx prisma migrate dev --name init
+    ```
+9. Run a seeder
+    ```
+    npx prisma db seed
     ```
