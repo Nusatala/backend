@@ -447,19 +447,16 @@ async function main() {
     await prisma.testimonials.createMany({
         data: [
             {
-                id: 1,
                 user_id: 3,
                 testimony: 'Aplikasi sangat membantu saya dalam mengenali alat musik tradisional yang sebelumnya tidak saya ketahui.',
                 rating: 5
             },
             {
-                id: 2,
                 user_id: 4,
                 testimony: 'Aplikasi ini membantu saya mengenal dan mempelajari alat musik tradisional Indonesia dengan fitur pengenalan gambar yang cerdas.',
                 rating: 5
             },
             {
-                id: 2,
                 user_id: 5,
                 testimony: 'Saya suka bagaimana aplikasi ini menggunakan teknologi pengenalan gambar untuk memberikan informasi yang akurat tentang alat musik tradisional yang saya ambil gambarnya',
                 rating: 5

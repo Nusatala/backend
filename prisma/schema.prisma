@@ -8,7 +8,7 @@ datasource db {
 }
 
 model roles {
-  id    Int       @id @default(autoincrement())
+  id    Int     @id @default(autoincrement())
   name  String?
   users users[]
 }
@@ -88,15 +88,15 @@ model faqs {
 }
 
 model images {
-  id         Int         @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   user_id    Int?
   label_id   Int?
-  image      String      @db.VarChar(255)
-  created_at DateTime?   @default(now()) @db.Timestamp(0)
-  updated_at DateTime?   @default(now()) @db.Timestamp(0)
+  image      String     @db.VarChar(255)
+  created_at DateTime?  @default(now()) @db.Timestamp(0)
+  updated_at DateTime?  @default(now()) @db.Timestamp(0)
   articles   articles[]
-  users      users?      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "images_ibfk_1")
-  labels     labels?     @relation(fields: [label_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "images_ibfk_2")
+  users      users?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "images_ibfk_1")
+  labels     labels?    @relation(fields: [label_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "images_ibfk_2")
 
   @@index([user_id], map: "user_id")
 }
@@ -107,7 +107,7 @@ model products {
   label_id    Int?
   name        String   @db.VarChar(255)
   thumbnail   String?  @db.VarChar(255)
-  description String?  @db.VarChar(255)
+  description String?  @db.VarChar(1000)
   price       Decimal  @db.Decimal(11, 2)
   link        String?  @db.VarChar(255)
   rating      Float?   @db.Float
