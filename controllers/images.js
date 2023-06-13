@@ -1,4 +1,5 @@
 const {PrismaClient} = require('@prisma/client')
+const fetch = require('node-fetch')
 const jwt = require('jsonwebtoken')
 const prisma = new PrismaClient()
 const getAllImages = async (req, res) => {
@@ -72,8 +73,18 @@ const uploadScanImages = async (req, res) => {
         const {imagePath} = require('../middleware/uploadImage');
         const imageURL = `https://storage.googleapis.com/nusatala-images/${imagePath}`
 
-        res.json({imageURL: imageURL});
+        const response = await fetch('https://ml-revised-hxrmrndhyq-et.a.run.app', {method: 'POST', body: `imageURL=${imageURL}`});
+        const data = await response.json();
 
+        const label = data.label
+
+        const labelData = await prisma.labels.findFirst({
+            where: {label: label}
+        })
+        
+        res.status(200).json({
+            "label_id": labelData.id
+        })
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
