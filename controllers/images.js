@@ -1,7 +1,6 @@
 const {PrismaClient} = require('@prisma/client')
 const jwt = require('jsonwebtoken')
 const prisma = new PrismaClient()
-
 const getAllImages = async (req, res) => {
     try {
         const images = await prisma.images.findMany();
@@ -49,7 +48,7 @@ const getImageById = async (req, res) => {
 
 const createImage = async (req, res) => {
     try {
-        const {image} = req.body
+        const {image} = req.files
         let {label_id} = parseInt(req.body.label_id)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
@@ -61,6 +60,20 @@ const createImage = async (req, res) => {
             }
         })
         return res.status(201).json(images)
+    } catch (error) {
+        return res.status(500).json({
+            "error": `${error}`
+        })
+    }
+}
+
+const uploadScanImages = async (req, res) => {
+    try {
+        const {imagePath} = require('../middleware/uploadImage');
+        const imageURL = `https://storage.googleapis.com/nusatala-images/${imagePath}`
+
+        res.json({imageURL: imageURL});
+
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
@@ -126,6 +139,7 @@ module.exports = {
     getTwoImages,
     getImageById,
     createImage,
+    uploadScanImages,
     updateImage,
     deleteImage
 }
