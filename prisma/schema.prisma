@@ -31,7 +31,7 @@ model users {
   password        String            @db.VarChar(80)
   name            String            @db.VarChar(80)
   role_id         Int               @default(2)
-  photo           String?           @db.VarChar(80)
+  photo           String?           @default("https://storage.googleapis.com/nusatala-images/profiles/default.png") @db.VarChar(80)
   created_at      DateTime?         @default(now()) @db.Timestamp(0)
   updated_at      DateTime?         @default(now()) @db.Timestamp(0)
   roles           roles             @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
