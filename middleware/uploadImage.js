@@ -21,6 +21,26 @@ const uploadHandler = multer({
     })
 });
 
+const uploadHandler2 = multer({
+    storage: multerGoogleStorage.storageEngine({
+        autoRetry: true,
+        bucket: 'nusatala-images',
+        projectId: 'nusatala-team-project',
+        keyFilename: './service-key.json',
+        contentType: ( req, file ) => {
+            return "image/jpeg";
+        },
+        filename: (req, file, cb) => {
+            imagePath = `scans/${Date.now()}_${file.originalname}`;
+            cb(null, imagePath);
+            module.exports = {
+                imagePath,
+            }
+        }
+    })
+});
+
 module.exports = {
     uploadHandler,
+    uploadHandler2
 }

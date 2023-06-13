@@ -49,7 +49,8 @@ const getImageById = async (req, res) => {
 
 const createImage = async (req, res) => {
     try {
-        const {image} = req.files
+        const {imagePath} = require('../middleware/uploadImage');
+        const imageURL = `https://storage.googleapis.com/nusatala-images/${imagePath}`
         let {label_id} = parseInt(req.body.label_id)
         const token = req.get('Authorization')
         const jwt_payload = jwt.verify(token, process.env.SECRET_KEY)
@@ -57,7 +58,7 @@ const createImage = async (req, res) => {
             data: {
                 user_id: jwt_payload.user_id,
                 label_id: label_id,
-                image: image,
+                image: imageURL,
             }
         })
         return res.status(201).json(images)
