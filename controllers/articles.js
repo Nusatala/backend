@@ -13,10 +13,48 @@ const counterViews = async (id) => {
 const getAllArticles = async (req, res) => {
     try {
         const articles = await prisma.articles.findMany()
-        return res.status(200).json(articles)
+        const articlesData = await Promise.all(articles.map(async article => {
+            const image = await prisma.images.findUnique({
+                where: {
+                    id: article.image_id
+                }
+            })
+            return {
+                ...article,
+                image: image
+            }
+        }))
+        return res.status(200).json(articlesData)
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
+        })
+    }
+}
+
+const getArticleByCreated = async (req, res) => {
+    try {
+        const articles = await prisma.articles.findMany({
+            orderBy:{
+                created_at: 'desc'
+            },
+            take: 5
+        })
+        const articlesData = await Promise.all(articles.map(async article => {
+            const image = await prisma.images.findUnique({
+                where: {
+                    id: article.image_id
+                }
+            })
+            return {
+                ...article,
+                image: image
+            }
+        }))
+        return res.status(200).json(articlesData)
+    } catch (error) {
+        return res.status(200).json({
+            'error': `${error}`
         })
     }
 }
@@ -29,7 +67,18 @@ const getArticleByViews = async (req, res) => {
             },
             take: 5
         })
-        return res.status(200).json(articles)
+        const articlesData = await Promise.all(articles.map(async article => {
+            const image = await prisma.images.findUnique({
+                where: {
+                    id: article.image_id
+                }
+            })
+            return {
+                ...article,
+                image: image
+            }
+        }))
+        return res.status(200).json(articlesData)
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
@@ -48,10 +97,15 @@ const getArticleById = async (req, res) => {
                 message: 'Data Not Found'
             })
         }
-        if(articles){
-            await counterViews(articles.id)
+        const image = await prisma.images.findUnique({
+            where: {id: articles.image_id}
+        })
+        const articlesData = {
+            ...articles,
+            image: image
         }
-        return res.status(200).json(articles)
+        await counterViews(articles.id)
+        return res.status(200).json(articlesData)
     } catch (error) {
         return res.status(500).json({
             "error": `${error}`
@@ -150,6 +204,7 @@ const deleteArticle = async (req, res) => {
 
 module.exports = {
     getAllArticles,
+    getArticleByCreated,
     getArticleByViews,
     getArticleById,
     createArticle,
