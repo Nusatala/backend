@@ -88,7 +88,8 @@ const getArticleByViews = async (req, res) => {
 
 const getArticleByLabelId = async (req, res) => {
     try {
-        const label_id = parseInt(req.params.label_id)
+        let {label_id} = req.params
+        label_id = parseInt(label_id)
         const articles = await prisma.articles.findFirst({
             where: {label_id: label_id}
         })
