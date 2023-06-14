@@ -86,6 +86,32 @@ const getArticleByViews = async (req, res) => {
     }
 }
 
+const getArticleByLabelId = async (req, res) => {
+    try {
+        const label_id = parseInt(req.params.label_id)
+        const articles = await prisma.articles.findFirst({
+            where: {label_id: label_id}
+        })
+        if(!articles){
+            return res.status(404).json({
+                message: "Data Not Found"
+            })
+        }
+        const image = await prisma.images.findUnique({
+            where: {id: articles.image_id}
+        })
+        const articlesData = {
+            ...articles,
+            image: image
+        }
+        return res.status(200).json(articlesData)
+    } catch (error) {
+        return res.status(500).json({
+            "error": `${error}`
+        })
+    }
+}
+
 const getArticleById = async (req, res) => {
     try {
         const id = parseInt(req.params.id)
@@ -206,6 +232,7 @@ module.exports = {
     getAllArticles,
     getArticleByCreated,
     getArticleByViews,
+    getArticleByLabelId,
     getArticleById,
     createArticle,
     updateArticle,

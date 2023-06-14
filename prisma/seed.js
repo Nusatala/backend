@@ -231,7 +231,7 @@ async function main() {
                 user_id: 1, //Data sementara
                 image_id: 7,// Data sementara
                 tutorial_id: 7,// Data sementara
-                label_id: 6,
+                label_id: 7,
                 title: 'Tifa',
                 asal_daerah: 'Papua',
                 history: 'Tifa adalah alat musik pukul mirip gendang dan biasa dikenal dengan nama Tahitoe atau Titir. Tifa memiliki beberapa jenis di antaranya adalah Tifa Jekir, Tifa Dasar, Tifa Potong, Tifa Jekir Potong, dan Tifa Bass. Tifa sendiri saat ini sering digunakan untuk mengiringi tarian perang dan tarian daerah seperti tari Lenso dan tari Gatsi. Asal usul Tifa berasal dari mitos 2 bersaudara yang menemukan pohon opsur yang mengeluarkan suara indah di tengah malam, lalu dua saudara tersebut menebang dan membuang bagian tengahnya. Terakhir, mereka menutup lubang kayu tersebut dan menutupinya dengan kulit hewan Soa-soa sehingga jadilah Tifa yang dikenal hingga saat ini.',
