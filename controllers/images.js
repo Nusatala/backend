@@ -73,24 +73,21 @@ const uploadScanImages = async (req, res) => {
     try {
         const {imagePath} = require('../middleware/uploadImage');
         const imageURL = `https://storage.googleapis.com/nusatala-images/${imagePath}`;
-
+        const params = new URLSearchParams();
+        params.append('imageURL', imageURL);
         const response = await fetch('https://ml-revised-hxrmrndhyq-et.a.run.app', {
             method: 'POST',
-            body: `imageURL=${imageURL}`
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            body: params
         });
-        if(response.size===0){
-            return res.status(500).json({
-                "error": "ML Internal Server Error"
-            });
-        }
         const data = await response.json();
-        const label = data.prediction;
 
         const labelData = await prisma.labels.findFirst({
-            where: {label: label}
+            where: {
+                label: data.prediction
+            },
         });
-        
-        res.status(200).json({
+        return res.status(200).json({
             "label_id": labelData.id
         });
     } catch (error) {
