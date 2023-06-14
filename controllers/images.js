@@ -87,6 +87,11 @@ const uploadScanImages = async (req, res) => {
                 label: data.prediction
             },
         });
+        if(!labelData){
+            return res.status(404).json({
+                "message": "There is no label that match with this image"
+            });
+        }
         return res.status(200).json({
             "label_id": labelData.id
         });
