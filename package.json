@@ -25,6 +25,7 @@
     "prisma": "^4.14.1"
   },
   "dependencies": {
+    "@google-cloud/common": "^4.0.3",
     "@google-cloud/storage": "^6.11.0",
     "@prisma/client": "^4.14.1",
     "bcryptjs": "^2.4.3",
