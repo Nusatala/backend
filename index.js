@@ -9,6 +9,7 @@ const imagesRoutes = require('./routes/images')
 const articlesRoutes = require('./routes/articles')
 const quizzesRoutes = require('./routes/quizzes')
 const productsRoutes = require('./routes/products')
+const nearbySearchRoutes = require('./routes/nearbySearch')
 const healthCheckRoutes = require('./routes/healthChecks')
 
 const dotenv = require('dotenv');
@@ -30,6 +31,7 @@ app.use('/images', imagesRoutes)
 app.use('/articles', articlesRoutes)
 app.use('/quizzes', quizzesRoutes)
 app.use('/products', productsRoutes)
+app.use('/nearby-search', nearbySearchRoutes)
 app.use('/health-check', healthCheckRoutes)
 
 const URL = process.env.URL;
