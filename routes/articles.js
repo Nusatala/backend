@@ -6,7 +6,7 @@ const {verifyUser, verifyAdmin} = require('../middleware/auth');
 router.get('/', verifyUser, getAllArticles);
 router.get('/popularity', verifyUser, getArticleByViews);
 router.get('/new', verifyUser, getArticleByCreated);
-router.get('/:label', verifyUser, getArticleByLabelId);
+router.get('/:label_id', verifyUser, getArticleByLabelId);
 router.get('/:id', verifyUser, getArticleById);
 router.post('/', verifyAdmin, createArticle);
 router.put('/:id', verifyAdmin, updateArticle);
