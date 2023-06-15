@@ -32,7 +32,7 @@ const getTutorialById = async (req, res) => {
 const getTutorialByLabel = async (req, res) => {
     try {
         const label_id = parseInt(req.params.label_id)
-        const tutorials = await prisma.tutorials.findUnique({
+        const tutorials = await prisma.tutorials.findFirst({
             where: {label_id: label_id}
         })
         if(!tutorials){
